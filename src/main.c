@@ -28,6 +28,7 @@ int main (void){
 	while(1){
 		printf( "%d", wiringPiSPIDataRW(channel, data, len));
 	}
+
 }
 
 
