@@ -3,7 +3,10 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-static int channel = 0;
+#define BASE 100;
+#define SPI_CHAN 0;
+#include "mcp3004.h"
+
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
 
@@ -34,25 +37,23 @@ int main (void){
 	}
 	else{
 		printf("Done.\n");
-		pinMode(10, OUTPUT); //Set CE0 as output
-		pinMode(12, OUTPUT); //Set MOSI as output	
-		pinMode(13, INPUT); //Set MISO as input
 		delay(5000);
 	}
 	/*Initialize the chip like given in the datasheet #CS/SHDN -> LOW; If started with CE0 on LOW u need to toggle first.
 	 *By default on my PI3/4 the CS0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
 	 * -> gpio readall
 	 **/
-	printf("Initialize MCP3008 communication..\n");
-	digitalWrite(10, LOW);
 	
-	printf("Done.\n");
-	delay(5000);
-
-	//Read stuff
-	unsigned char *data;
+	int chan;
+	int mcp_answer;
+	
+	mcp3004Setup(BASE, SPI_CHAN);
+	
 	while(1){
-		printf( "%d", wiringPiSPIDataRW(channel, data, len));
+		//Pull CE0 to LOW!! Important for MCP3008
+		mcp_answer = analogRead( Base + chan );
+		printf("%d", mcp_answer);
+		
 	}
 }
 
