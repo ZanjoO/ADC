@@ -7,7 +7,7 @@
 #define SPEED 1000000
 #define LEN 10
 
-//static int channel = 100;
+static int channel = 0;
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
 
@@ -32,7 +32,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(BASE, SPEED) == -1){
+	if(wiringPiSetup() || wiringPiSPISetup(channel, SPEED) == -1){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
