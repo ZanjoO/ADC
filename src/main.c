@@ -46,9 +46,8 @@ int main (void){
 	delay(1000);
 
 	//Read stuff
-	unsigned char *data = 0b0000000000;
+	unsigned char *data;
 	while(1){
-		fputs(wiringPiSPIDataRW(channel, data, len), dataDump);
 		printf( "%d", wiringPiSPIDataRW(channel, data, len));
 	}
 }
