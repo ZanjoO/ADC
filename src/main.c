@@ -46,7 +46,7 @@ int main (void){
 	
 	while(1){
 		
-			result = wiringPiSPIDataRW(channel, data, ken);
+			result = wiringPiSPIDataRW(channel, data, len);
 			printf("%d", result);
 	}
 
