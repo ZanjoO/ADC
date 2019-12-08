@@ -12,12 +12,10 @@ static int len = 10; //Resolution of ADC or expected No. of bits.
 void sigHandler(void);
 
 int main (void){
-	int cs0 = 0; //Later needed for init the MCP3008
-	
 	//Data dumpfile
-	FILE *dataDump = NULL;
+	FILE *dataDump;
 	printf("Create new Dump-file..");
-	dataDump = fopen("./dataDump.txt", "w"); //Creation
+	dataDump = fopen("./dataDump.txt", "a+"); //Creation, open for r/w at file end.
 	
 	if(dataDump == NULL){
 		printf("Unable to create Dump-file");
