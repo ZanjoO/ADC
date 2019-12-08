@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h> //Eventhandler action e.g. ctrl-c for close file before interrupted.
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
@@ -10,11 +9,7 @@ static int len = 10; //Resolution of ADC or expected No. of bits.
 
 
 //Tidy up
-void signal sigHandler(){
-	
-	fclose(dataDump);
-	exit(0);
-	}
+void sigHandler(void);
 
 int main (void){
 	int cs0 = 0; //Later needed for init the MCP3008
@@ -27,9 +22,9 @@ int main (void){
 	if(dataDump == NULL){
 		printf("Unable to create Dump-file");
 		exit(EXIT_FAILURE);
-	}else{
+	}else
 		printf("Dump-file created.");
-		}
+		
 	
 	//init. spi      	
 	printf("Setup the SPI interface..");
