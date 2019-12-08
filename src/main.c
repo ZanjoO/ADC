@@ -28,7 +28,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) == -1){
+	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) < 0){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
@@ -42,17 +42,15 @@ int main (void){
 	
 	
 	digitalWrite(10, 0); //Pull CE0 to LOW to iniatiate communication
+	delay(1);
 	digitalWrite(12, 1); //Push MOSI to HIGH to institute startbit
-	digitalWrite(12, 1); //Set Singl/Diff Mode
-	digitalWrite(12, 0); //Chip Selection 0,0,0 = ch0!
-	digitalWrite(12, 0);
-	digitalWrite(12, 0);
-	
-	unsigned char data = 248;
+	delay(5000);
+	unsigned char data [10];
+	data = "110010"
 	int result = 0;
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		result = wiringPiSPIDataRW(channel, &data, len);
+		result = wiringPiSPIDataRW(channel, data, len);
 		printf("%d\n", result);
 	}
 }
