@@ -3,6 +3,7 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
+
 static int channel = 0;
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
@@ -11,17 +12,25 @@ int main (void){
 
 	//init. spi
 	int cs0 = 0; //Later needed for init the MCP3008
-	int err = wiringPiSPISetup(channel, speed);
-	if(err == -1){
-		printf("Failed to initialize the SPIIi");
+      	
+	printf("Setup the SPI interface..");
+	int spiErr = wiringPiSPISetup(channel, speed); //Setup the SPI-Bus CE0 and CLK
+	if(spiErr == -1){
+		printf("Failed to initialize the SPI-Bus.");
+		return 1;
 	}
-
+	else{
+		printf("Done.");
+		delay(1000);
+	}
 	//Initialize the chip like given in the datasheet #CS/SHDN
-	printf("Init toggle to activate chip..");
-	cs0 = cs0 << 1;
-	delay (0.1);
-	cs0 = cs0 >> 1;
-	printf("Toggle done..");
+	/*
+	 *By default the CS0 is on High.
+	 * */
+	printf("Initialize MCP3008 communication..");
+		
+	printf("Done.");
+	delay(1000);
 
 	//Read stuff
 	unsigned char *data = 0;
@@ -30,7 +39,6 @@ int main (void){
 	}
 
 }
-
 
 /*
  *Author: S.P. Nuerenberg
