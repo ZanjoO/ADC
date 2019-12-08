@@ -5,7 +5,7 @@
 
 static int channel = 0;
 static int speed = 500000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
-static int len = 10; //Resolution of ADC or expected No. of bits.
+static int len = 0B10010; //Resolution of ADC or expected No. of bits.
 
 
 //Tidy up
@@ -48,10 +48,12 @@ int main (void){
 	digitalWrite(12, 0);
 	digitalWrite(12, 0);
 	
-	unsigned char data;
+	unsigned char data = 11000;
+	int result = null;
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		printf("%d\n", wiringPiSPIDataRW(channel, &data, len) );
+		result = wiringPiSPIDataRW(channel, &data, len);
+		printf("%d\n", result);
 	}
 }
 
