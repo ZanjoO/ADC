@@ -4,7 +4,7 @@
 #include <wiringPiSPI.h>
 
 static int channel = 0;
-static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
+static int speed = 500000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
 
 
@@ -40,10 +40,17 @@ int main (void){
 	 * -> gpio readall
 	 **/
 	
-	unsigned char data = '1';
+	
+	digitalWrite(10, 0); //Pull CE0 to LOW to iniatiate communication
+	digitalWrite(12, 1); //Push MOSI to HIGH to institute startbit
+	digitalWrite(12, 1); //Set Singl/Diff Mode
+	digitalWrite(12, 0); //Chip Selection 0,0,0 = ch0!
+	digitalWrite(12, 0);
+	digitalWrite(12, 0);
+	
+	unsigned char data;
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		
 		printf("%d", wiringPiSPIDataRW(channel, &data, len) );
 	}
 }
