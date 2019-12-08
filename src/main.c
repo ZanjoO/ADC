@@ -4,9 +4,10 @@
 #include <wiringPiSPI.h>
 
 #define BASE 100;
-#define SPI_CHAN 0;
-#include "mcp3004.h"
+#define SPEED 1000000;
+#define LEN 10;
 
+//static int channel = 100;
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
 
@@ -17,7 +18,7 @@ void sigHandler(void);
 int main (void){
 	
 	
-	//Data dumpfile
+	//File to dump the data
 	FILE *dataDump;
 	printf("Create new Dump-file..\n");
 	dataDump = fopen("./dataDump.txt", "a+"); //Creation, open for r/w at file end.
@@ -31,7 +32,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) == -1){
+	if(wiringPiSetup() || wiringPiSPISetup(BASE, SPEED) == -1){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
@@ -44,16 +45,16 @@ int main (void){
 	 * -> gpio readall
 	 **/
 	
-	int chan;
-	int mcp_answer;
-	
-	mcp3004Setup(BASE, SPI_CHAN);
-	
+	unsigned char *data;
+	digitalWrite(10, 1);
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		mcp_answer = analogRead( Base + chan );
-		printf("%d", mcp_answer);
+		digitalWrite(10, 0); //Start of communication
+		printf(digitalRead(10));
 		
+		printf("%d", wiringPiSPIDataRW(BASE, data, LEN) );
+		delay(5000);
+		digitalWrite(10, 1); //End of communication
 	}
 }
 
