@@ -3,10 +3,6 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-#define BASE 100
-#define SPEED 1000000
-#define LEN 10
-
 static int channel = 0;
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
 static int len = 10; //Resolution of ADC or expected No. of bits.
@@ -32,7 +28,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(channel, SPEED) == -1){
+	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) == -1){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
@@ -44,14 +40,14 @@ int main (void){
 	 * -> gpio readall
 	 **/
 	
-	unsigned char *data;
+	unsigned char data = 0x11000;
 	digitalWrite(10, 1);
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
 		digitalWrite(10, 0); //Start of communication
 		printf("%d", digitalRead(10));
 		
-		printf("%d", wiringPiSPIDataRW(BASE, data, LEN) );
+		printf("%d", wiringPiSPIDataRW(channel, *data, len) );
 		delay(5000);
 		digitalWrite(10, 1); //End of communication
 	}
