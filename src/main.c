@@ -48,8 +48,8 @@ int main (void){
 	digitalWrite(12, 0);
 	digitalWrite(12, 0);
 	
-	unsigned char data = 11000;
-	int result = null;
+	unsigned char data = 248;
+	int result = 0;
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
 		result = wiringPiSPIDataRW(channel, &data, len);
