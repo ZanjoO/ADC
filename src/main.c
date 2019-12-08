@@ -28,7 +28,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSPISetup(channel, speed) == -1){
+	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) == -1){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
