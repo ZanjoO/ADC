@@ -15,7 +15,7 @@ int main (void){
 	
 	
 	//File to dump the data
-	FILE *dataDump;
+	FILE *dataDump = NULL;
 	printf("Create new Dump-file..\n");
 	dataDump = fopen("./dataDump.txt", "a+"); //Creation, open for r/w at file end.
 	
@@ -40,14 +40,11 @@ int main (void){
 	 * -> gpio readall
 	 **/
 	
-	unsigned char data[] = {'1', '1', '0', '0'};
+	unsigned char data = '1';
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		digitalWrite(10, 0); //Start of communication
 		
 		printf("%d", wiringPiSPIDataRW(channel, &data, len) );
-		delay(5000);
-		digitalWrite(10, 1); //End of communication
 	}
 }
 
