@@ -38,7 +38,6 @@ int main (void){
 	}
 	else{
 		printf("Done.\n");
-		delay(5000);
 	}
 	/*Initialize the chip like given in the datasheet #CS/SHDN -> LOW; If started with CE0 on LOW u need to toggle first.
 	 *By default on my PI3/4 the CS0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
