@@ -50,7 +50,7 @@ int main (void){
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
 		digitalWrite(10, 0); //Start of communication
-		printf(digitalRead(10));
+		printf("%d", digitalRead(10));
 		
 		printf("%d", wiringPiSPIDataRW(BASE, data, LEN) );
 		delay(5000);
