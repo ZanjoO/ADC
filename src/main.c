@@ -3,9 +3,9 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-#define BASE 100;
-#define SPEED 1000000;
-#define LEN 10;
+#define BASE 100
+#define SPEED 1000000
+#define LEN 10
 
 //static int channel = 100;
 static int speed = 1000000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
