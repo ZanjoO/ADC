@@ -5,7 +5,7 @@
 
 static int channel = 0;
 static int speed = 500000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
-static int len = 0B10010; //Resolution of ADC or expected No. of bits.
+static int len = 0B1010; //Resolution of ADC or expected No. of bits.
 
 
 //Tidy up
@@ -39,20 +39,17 @@ int main (void){
 	 *By default on my PI3/4 the CS0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
 	 * -> gpio readall
 	 **/
-	
-	
 	digitalWrite(10, 0); //Pull CE0 to LOW to iniatiate communication
-	delay(1);
-	digitalWrite(12, 1); //Push MOSI to HIGH to institute startbit
 	delay(5000);
-	unsigned char data [10];
-	data = "110010"
+	unsigned char data = 0x18;
 	int result = 0;
+	
 	while(1){
-		//Pull CE0 to LOW!! Important for MCP3008
-		result = wiringPiSPIDataRW(channel, data, len);
-		printf("%d\n", result);
+		
+			result = wiringPiSPIDataRW(channel, data, ken);
+			printf("%d", result);
 	}
+
 }
 
 /*
