@@ -51,8 +51,7 @@ int main (void){
 	unsigned char data;
 	while(1){
 		//Pull CE0 to LOW!! Important for MCP3008
-		printf("%d", wiringPiSPIDataRW(channel, &data, len) );
-		delay(5000);
+		printf("%d\n", wiringPiSPIDataRW(100, &data, len) );
 	}
 }
 
