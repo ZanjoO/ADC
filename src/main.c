@@ -46,12 +46,15 @@ int main (void){
 	unsigned char data[3] = {0x01, 0x80, 0x00};
 	while(1){
 		//Pull CS to LOW to iniatiate communication
+		printf("%d\n", digitalRead(CS);
 		digitalWrite(CS, 0);
-		printf("%d", wiringPiSPIDataRW(CHAN, data, LEN));
-		printf("%d", data[0]);
-		printf("%d", data[1]);
-		printf("%d", data[2]);
+		printf("%d\n", wiringPiSPIDataRW(CHAN, data, LEN));
+		printf("%d\n", data[0]);
+		printf("%d\n", data[1]);
+		printf("%d\n", data[2]);
 		digitalWrite(CS, 1);
+		printf("%d\n", digitalRead(CS);
+		delay(1);
 	}
 }
 
