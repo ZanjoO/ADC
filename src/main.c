@@ -43,22 +43,30 @@ int main (void){
 	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
 	//Make sure that toggle from 1 to 0
 
-	unsigned char data[3] = {0x01, 0x80, 0x00};
+	unsigned char data[3];
 	while(1){
 		//Pull CS to LOW to iniatiate communication
-		printf("%d\n", digitalRead(CS));
-		digitalWrite(CS, 0);
-		printf("%d\n", digitalRead(CS));
-		printf("%d\n", wiringPiSPIDataRW(CHAN, data, LEN));
+		data[0] = 0x01;
+		data[1] = 0x80;
+	       	data[2] = 0x00;
+		digitalWrite(CS, 0);	
+		wiringPiSPIDataRW(CS, data, LEN);
+		digitalWrite(CS, 1);
 		printf("%d\n", data[0]);
 		printf("%d\n", data[1]);
 		printf("%d\n", data[2]);
-		digitalWrite(CS, 1);
-		printf("%d\n", digitalRead(CS));
-		exit(1);
+		printf("%d\n", doVolts(data[1], data[2]));
 	}
 }
 
+short doVolts(unsigned char msbArray, unsigned char lsbArray){
+	
+	return ((int) (((msbArray & 0x03) << 8) + lsbArray));
+}
+
+int doBits(unsigned char msbArray, unsigned char lsbArray){
+	return 0;
+}
 /*
  *Author: S.P. Nuerenberg
  *Mod-Description: Software for communication between RaspberryPi and MCP3008-ADC IC.
