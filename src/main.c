@@ -48,11 +48,9 @@ int main (void){
 		//Pull CS to LOW to iniatiate communication
 		digitalWrite(CS, 0);
 		printf("%d", wiringPiSPIDataRW(CHAN, data, LEN));
-		delay(1000);
 		printf("%d", data[0]);
 		printf("%d", data[1]);
 		printf("%d", data[2]);
-		delay(1000);
 		digitalWrite(CS, 1);
 	}
 }
