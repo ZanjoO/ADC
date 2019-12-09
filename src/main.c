@@ -44,12 +44,13 @@ int main (void){
 	digitalWrite(CS, 0); //Pull CS to LOW to iniatiate communication
 	delay(5000);
 	unsigned char *data = 0x01; //Startbit
+	unsigned int transfer = 0x01;
 	unsigned int result = 0;
-	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
+	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, transfer, LEN));
 	
 	while(1){
-			data = &0x80;
-			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
+			transfer = 0x80;
+			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, transfer, LEN));
 		for(int i = 0; i < 8; i++){
 			result = result << digitalRead(MISO);	
 		}
