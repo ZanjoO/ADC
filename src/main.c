@@ -9,7 +9,7 @@
 #define CS 10 //Chip select Pin
 #define CHAN 0 //Channel 0/1 
 #define SPEED 1000000 //Bus speed
-#define LEN 10 //Length of expected bits
+#define LEN 3 //Length of expected bytes
 
 int main (void){
 	
@@ -40,21 +40,22 @@ int main (void){
 	 * -> gpio readall
 	 **/
 	
-	//to transmit : 0x01(start bit) 0x80()
-	digitalWrite(CS, 0); //Pull CS to LOW to iniatiate communication
+	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
+	//Make sure that toggle from 1 to 0
+	digitalWrite(CS, 1);
 	delay(5000);
-	unsigned char *data = 0x01; //Startbit
-	unsigned int transfer = 0x01;
-	unsigned int result = 0;
-	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, transfer, LEN));
+	unsigned char data[3] = {0x01, 0x80, 0x00};
 	
 	while(1){
-			transfer = 0x80;
-			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, transfer, LEN));
-		for(int i = 0; i < 8; i++){
-			result = result << digitalRead(MISO);	
-		}
-			printf("%d\n", result);
+		//Pull CS to LOW to iniatiate communication
+		digitalWrite(CS, 0);
+		printf("%d", wiringPiSPIDataRW(CHAN, data, LEN));
+		delay(1000);
+		printf("%d", data[0]);
+		printf("%d", data[1]);
+		printf("%d", data[2]);
+		delay(1000);
+		digitalWrite(CS, 1);
 	}
 }
 
