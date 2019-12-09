@@ -11,6 +11,15 @@
 #define SPEED 1000000 //Bus speed
 #define LEN 3 //Length of expected bytes
 
+short doVolts(unsigned char msbArray, unsigned char lsbArray){
+	
+	return ((int) (((msbArray & 0x03) << 8) + lsbArray));
+}
+
+int doBits(unsigned char msbArray, unsigned char lsbArray){
+	return 0;
+}
+
 int main (void){
 	
 	
@@ -59,14 +68,7 @@ int main (void){
 	}
 }
 
-short doVolts(unsigned char msbArray, unsigned char lsbArray){
-	
-	return ((int) (((msbArray & 0x03) << 8) + lsbArray));
-}
 
-int doBits(unsigned char msbArray, unsigned char lsbArray){
-	return 0;
-}
 /*
  *Author: S.P. Nuerenberg
  *Mod-Description: Software for communication between RaspberryPi and MCP3008-ADC IC.
