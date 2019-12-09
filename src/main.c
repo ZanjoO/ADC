@@ -44,8 +44,9 @@ int main (void){
 	//Make sure that toggle from 1 to 0
 	digitalWrite(CS, 1);
 	delay(5000);
+	printf("CS 1")
 	unsigned char data[3] = {0x01, 0x80, 0x00};
-	
+	printf("Test");
 	while(1){
 		//Pull CS to LOW to iniatiate communication
 		digitalWrite(CS, 0);
