@@ -48,10 +48,12 @@ int main (void){
 	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
 	
 	while(1){
-			data = 0x80;
+			&data = 0x80;
 			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
-			result = digitalRead(MISO);
-		printf("%d", result);
+		for(int i = 0; i < 8, i++){
+			result = result << digitalRead(MISO);	
+		}
+			printf("%d\n", result);
 	}
 }
 
