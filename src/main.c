@@ -48,6 +48,7 @@ int main (void){
 		//Pull CS to LOW to iniatiate communication
 		printf("%d\n", digitalRead(CS));
 		digitalWrite(CS, 0);
+		printf("%d\n", digitalRead(CS));
 		printf("%d\n", wiringPiSPIDataRW(CHAN, data, LEN));
 		printf("%d\n", data[0]);
 		printf("%d\n", data[1]);
