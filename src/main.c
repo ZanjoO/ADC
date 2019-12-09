@@ -54,7 +54,7 @@ int main (void){
 		printf("%d\n", data[2]);
 		digitalWrite(CS, 1);
 		printf("%d\n", digitalRead(CS));
-		delay(100);
+		exit(1);
 	}
 }
 
