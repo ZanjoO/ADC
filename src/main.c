@@ -43,7 +43,7 @@ int main (void){
 	//to transmit : 0x01(start bit) 0x80()
 	digitalWrite(CS, 0); //Pull CS to LOW to iniatiate communication
 	delay(5000);
-	unsigned char data = 0x01; //Startbit
+	unsigned char *data = 0x01; //Startbit
 	unsigned int result = 0;
 	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
 	
@@ -51,6 +51,7 @@ int main (void){
 			data = 0x80;
 			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
 			result = digitalRead(MISO);
+		printf("%d", result);
 	}
 }
 
