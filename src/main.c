@@ -42,13 +42,8 @@ int main (void){
 	
 	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
 	//Make sure that toggle from 1 to 0
-	if(digitalRead(CS) == 0)
-		digitalWrite(CS, 1);
-	
-	delay(5000);
-	printf("CS 1");
+
 	unsigned char data[3] = {0x01, 0x80, 0x00};
-	printf("Test");
 	while(1){
 		//Pull CS to LOW to iniatiate communication
 		digitalWrite(CS, 0);
