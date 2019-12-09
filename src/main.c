@@ -3,13 +3,13 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-static int channel = 0;
-static int speed = 500000; //WiringPi offers a range of integer values between 500k-32000k(Hz) which's respectively the CLK.
-static int len = 0B1010; //Resolution of ADC or expected No. of bits.
 
-
-//Tidy up
-void sigHandler(void);
+#define MOSI 12
+#define MISO 13
+#define CS 10 //Chip select Pin
+#define CHAN 0 //Channel 0/1 
+#define SPEED 1000000 //Bus speed
+#define LEN 10 //Length of expected bits
 
 int main (void){
 	
@@ -28,7 +28,7 @@ int main (void){
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(channel, speed) < 0){
+	if(wiringPiSetup() || wiringPiSPISetup(CHAN, SPEED) < 0){
 		printf("Failed to initialize the SPI-Bus.\n");
 		exit(1);
 	}
@@ -36,20 +36,22 @@ int main (void){
 		printf("Done.\n");
 	}
 	/*Initialize the chip like given in the datasheet #CS/SHDN -> LOW; If started with CE0 on LOW u need to toggle first.
-	 *By default on my PI3/4 the CS0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
+	 *By default on my PI3/4 the CE0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
 	 * -> gpio readall
 	 **/
-	digitalWrite(10, 0); //Pull CE0 to LOW to iniatiate communication
+	
+	//to transmit : 0x01(start bit) 0x80()
+	digitalWrite(CS, 0); //Pull CS to LOW to iniatiate communication
 	delay(5000);
-	unsigned char data = 0x18;
-	int result = 0;
+	unsigned char data = 0x01; //Startbit
+	unsigned int result = 0;
+	digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
 	
 	while(1){
-		
-			result = wiringPiSPIDataRW(channel, data, len);
-			printf("%d \n", result);
+			data = 0x80;
+			digitalWrite(MOSI, wiringPiSPIDataRW(CHAN, data, LEN));
+			result = digitalRead(MISO);
 	}
-
 }
 
 /*
