@@ -3,17 +3,15 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-
-#define MOSI 12
-#define MISO 13
 #define CS 10 //Chip select Pin
 #define CHAN 0 //Channel 0/1 
 #define SPEED 1000000 //Bus speed
 #define LEN 3 //Length of expected bytes
 
-short doVolts(unsigned char msbArray, unsigned char lsbArray){
-	
-	return ((int) (((msbArray & 0x03) << 8) + lsbArray));
+double doVolts(unsigned char msbArray, unsigned char lsbArray){
+	short res = (((msbArray & 0x03) << 8) | lsbArray);
+
+	return ((res * 3.3) / 1024);
 }
 
 int doBits(unsigned char msbArray, unsigned char lsbArray){
@@ -52,6 +50,7 @@ int main (void){
 	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
 	//Make sure that toggle from 1 to 0
 
+	double result;
 	unsigned char data[3];
 	while(1){
 		//Pull CS to LOW to iniatiate communication
@@ -61,10 +60,10 @@ int main (void){
 		digitalWrite(CS, 0);	
 		wiringPiSPIDataRW(CS, data, LEN);
 		digitalWrite(CS, 1);
-		printf("%d\n", data[0]);
-		printf("%d\n", data[1]);
-		printf("%d\n", data[2]);
-		printf("%d\n", doVolts(data[1], data[2]));
+		result = doVolts(data[1], data[2]);
+		if(result <1.50 || result > 1.9)
+			printf("%fV\n", result);
+		//printf("%fV\n", doVolts(data[1], data[2]));
 	}
 }
 
