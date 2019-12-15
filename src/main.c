@@ -5,24 +5,29 @@
 
 #define CS 10 //Chip select Pin
 #define CHAN 0 //Channel 0/1 
-#define SPEED 1000000 //Bus speed
+#define SPEED 1350000 //Bus speed
 #define LEN 3 //Length of expected bytes
 
 double doVolts(unsigned char msbArray, unsigned char lsbArray){
-	short res = (((msbArray & 0x03) << 8) | lsbArray);
+	double res = (((msbArray & 0x03) << 8) | lsbArray);
 
 	return ((res * 3.3) / 1024);
 }
 
-int doBits(unsigned char msbArray, unsigned char lsbArray){
-	return 0;
+int doDecimal(unsigned char valueArray[]){
+	int result;
+	result = ((valueArray[1] & 0x03)<<8) | valueArray[2];
+
+	return result;
 }
+
+void doWav(unsigned char inputArray[]);
 
 int main (void){
 	
 	
 	//File to dump the data
-	FILE *dataDump = 0;
+	FILE *dataDump;
 	printf( "Create new Dump-file..\n" );
 	dataDump = fopen( "./dataDump.txt", "a+" ); //Creation, open for r/w at file end.
 	
@@ -50,23 +55,17 @@ int main (void){
 	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
 	//Make sure that toggle from 1 to 0
 
-	double result;
 	unsigned char data[3];
+	digitalWrite( CS, 1 );
+	digitalWrite( CS, 0 ); 
 	while(1){
 		//Pull CS to LOW to iniatiate communication
 		data[0] = 0x01;
 		data[1] = 0x80;
-	       	data[2] = 0x00;
-		
-		//Pull CS to LOW Send/Retrieve Bytes
-		digitalWrite( CS, 0 );	
-		wiringPiSPIDataRW( CS, data, LEN );
-		digitalWrite( CS, 1 );
+		data[2] = 0x00;
 
-		result = doVolts(data[1], data[2]);
-		if(result < 1.50 || result > 1.9)
-			printf( "%fV\n", result );
-		printf( "%fV\n", doVolts(data[1], data[2]) );
+		wiringPiSPIDataRW( CS, data, LEN );
+		fprintf( dataDump, "%d", doDecimal(data) );
 	}
 }
 
