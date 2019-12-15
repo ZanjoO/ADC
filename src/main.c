@@ -22,25 +22,25 @@ int main (void){
 	
 	
 	//File to dump the data
-	FILE *dataDump = NULL;
-	printf("Create new Dump-file..\n");
-	dataDump = fopen("./dataDump.txt", "a+"); //Creation, open for r/w at file end.
+	FILE *dataDump = 0;
+	printf( "Create new Dump-file..\n" );
+	dataDump = fopen( "./dataDump.txt", "a+" ); //Creation, open for r/w at file end.
 	
-	if(dataDump == NULL){
-		printf("Unable to create Dump-file\n");
+	if( dataDump == NULL ){
+		printf( "Unable to create Dump-file\n" );
 		exit(1);
 	}else
-		printf("Done.\n");
+		printf( "Done.\n" );
 		
 	
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
-	printf("Setup the SPI interface..\n");
-	if(wiringPiSetup() || wiringPiSPISetup(CHAN, SPEED) < 0){
-		printf("Failed to initialize the SPI-Bus.\n");
-		exit(1);
+	printf( "Setup the SPI interface..\n" );
+	if( wiringPiSetup() || wiringPiSPISetup( CHAN, SPEED ) < 0 ){
+		printf( "Failed to initialize the SPI-Bus.\n" );
+		exit( 1 );
 	}
 	else{
-		printf("Done.\n");
+		printf( "Done.\n" );
 	}
 	/*Initialize the chip like given in the datasheet #CS/SHDN -> LOW; If started with CE0 on LOW u need to toggle first.
 	 *By default on my PI3/4 the CE0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
@@ -57,13 +57,16 @@ int main (void){
 		data[0] = 0x01;
 		data[1] = 0x80;
 	       	data[2] = 0x00;
-		digitalWrite(CS, 0);	
-		wiringPiSPIDataRW(CS, data, LEN);
-		digitalWrite(CS, 1);
+		
+		//Pull CS to LOW Send/Retrieve Bytes
+		digitalWrite( CS, 0 );	
+		wiringPiSPIDataRW( CS, data, LEN );
+		digitalWrite( CS, 1 );
+
 		result = doVolts(data[1], data[2]);
-		if(result <1.50 || result > 1.9)
-			printf("%fV\n", result);
-		//printf("%fV\n", doVolts(data[1], data[2]));
+		if(result < 1.50 || result > 1.9)
+			printf( "%fV\n", result );
+		printf( "%fV\n", doVolts(data[1], data[2]) );
 	}
 }
 
