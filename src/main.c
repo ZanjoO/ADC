@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+//At this point thx to Gordon Henderson for this awesome lib.
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
@@ -8,15 +9,15 @@
 #define SPEED 1350000 //Bus speed
 #define LEN 3 //Length of expected bytes
 
-double doVolts(unsigned char msbArray, unsigned char lsbArray){
-	double res = (((msbArray & 0x03) << 8) | lsbArray);
+double doVolts( unsigned char data[] ){
+	double res = ((( data[1] & 0x03 ) << 8 ) | data[2] );
 
-	return ((res * 3.3) / 1024);
+	return (( res * 3.3 ) / 1024);
 }
 
-int doDecimal(unsigned char valueArray[]){
+int doDecimal( unsigned char data[] ){
 	int result;
-	result = ((valueArray[1] & 0x03)<<8) | valueArray[2];
+	result = ((data[1] & 0x03)<<8) | data[2];
 
 	return result;
 }
@@ -46,30 +47,22 @@ int main (void){
 	}
 	else{
 		printf( "Done.\n" );
+		printf( "Start write to file.. \n" );
 	}
-	/*Initialize the chip like given in the datasheet #CS/SHDN -> LOW; If started with CE0 on LOW u need to toggle first.
-	 *By default on my PI3/4 the CE0 was on High. It's needed to invert it to initiate communication (MCP3008 Datasheet).
-	 * -> gpio readall
-	 **/
 	
-	//to transmit : 0x01(start bit) 0x80(Single mode inclusive channel select)
-	//Make sure that toggle from 1 to 0
-
-	unsigned char data[3];
 	digitalWrite( CS, 1 );
-	digitalWrite( CS, 0 ); 
+	digitalWrite( CS, 0 );
+	unsigned char data[3];
 	while(1){
-		//Pull CS to LOW to iniatiate communication
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		fprintf( dataDump, "%d", doDecimal(data) );
+	
+		fprintf( dataDump, "%d, %f\n", doDecimal(data), doVolts(data) );
 	}
 }
-
-
 /*
  *Author: S.P. Nuerenberg
  *Mod-Description: Software for communication between RaspberryPi and MCP3008-ADC IC.
