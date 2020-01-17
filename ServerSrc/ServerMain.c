@@ -107,7 +107,7 @@ int main (void){
 		strcat(*puffer, "\0");
 		}
 		
-		puffer = htons(puffer); //Convert from host to network byte order
+		//puffer = htons(puffer); //Convert from host to network byte order
 		send_Data(&sock, &puffer, strlen(puffer), addr, PORT);
 	}
 }
