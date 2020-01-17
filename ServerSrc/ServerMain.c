@@ -15,7 +15,7 @@
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 1024
+#define BUF 2048
 
 //Method which gets called when on error occured.
 void error_func(char *errormsg){
@@ -43,7 +43,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	}
 }
 
-void send_Data(int *sock, unsigned char *data, int size, char *addr, unsigned short port){
+void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
 		struct sockaddr_in target;
 		struct hostent *h;
 		int received;
@@ -93,23 +93,16 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned char *puffer[BUF];
+	unsigned short *res[BUF];
 	while(1){
 
-		for(int i = 0; i < 512; i++){
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		strcat(*puffer, data[1]);
-		strcat(*puffer, data[2]);
-		strcat(*puffer, "\0");
-		}
-		
-		//puffer = htons(puffer); //Convert from host to network byte order
-		send_Data(&sock, &puffer, strlen(puffer), addr, PORT);
-	}
+		res = htons(doDecimal(res)); //Convert from host to network byte order
+		send_Data(&sock, &res, sizeof(res), addr, PORT);
 }
 /*
  *Author: S.P. Nuerenberg
