@@ -93,23 +93,21 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned char *puffer[BUF];
+	unsigned char puffer[BUF];
 	while(1){
 
-		for(int i = 0; i < (BUF/2), i++){
+		for(int i = 0; i < 512); i++){
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		puffer += data[1];
-		puffer += data[2];
-		puffer += "\0"
+		strcat(puffer, data[1]);
+		strcat(puffer, data[2]);
+		strcat(puffer, "\0");
 		}
 		
-
-		
-		res = htons(doDecimal(data)); //Convert from host to network byte order
+		puffer = htons(puffer); //Convert from host to network byte order
 		send_Data(&sock, &res, sizeof(res), addr, PORT);
 	}
 }
