@@ -59,7 +59,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		struct hostent *h;
 		int rc;
 		
-		h = gethostbyname(addr);
+		h = getaddrinf(addr);
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
@@ -86,7 +86,7 @@ int main (void){
 	}
 
 	//Bind service to specified port
-	bind_Service(&sock, IN6ADDR_ANY_INIT, 0);
+	bind_Service(&sock, in6addr_any, 0);
 	printf("Ok.\n");
 
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
