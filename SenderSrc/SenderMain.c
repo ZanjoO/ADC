@@ -101,7 +101,7 @@ int main (void){
 
 		wiringPiSPIDataRW( CS, data, LEN );
 		res = htons(res); //Convert from host to network byte order
-		send_Data(&sock, res, sizeof(res), addr, PORT);
+		send_Data(&sock, &res, sizeof(res), addr, PORT);
 	}	
 }
 /*
