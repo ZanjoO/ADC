@@ -144,7 +144,7 @@ int main (void){
 		//convertHostShortToNetShort(res, toSend); Both systems work with little endian only caused trouble with garbage values
 		
 		for(int i = 0; i < sizeof(res); i++){
-			printf("%p\n", (void *)&res[i]);
+			printf("%u\n", &res[i]);
 		}
 
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
