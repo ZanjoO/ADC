@@ -139,13 +139,8 @@ int main (void){
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
 			res[i] = doDecimal(data);
-			printf(" Loop Nr %d", i);
 		}
 		//convertHostShortToNetShort(res, toSend); Both systems work with little endian only caused trouble with garbage values
-		for(int i = 0; i < 724; i++){
-			printf("%u \n", res[i]);
-		}
-
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
 	}	
 }
