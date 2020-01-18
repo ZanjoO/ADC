@@ -75,16 +75,11 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        printf("1%d\n", sizeof(puffer));
-        printf("%u\n", puffer[0])
-        convertNetShortToHostShort(puffer, res);
-
-        printf("2%d\n", sizeof(puffer));
-        printf("%u\n", puffer[0])
+        //convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf("%hu \n", res[i]);
+            printf("%hu \n", puffer[i]);
         }
     }
 }
