@@ -131,7 +131,6 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 
-	unsigned short test = 512;
 	while(1){
 
 		for(int i = 0; i < (BUF/SIZESHORT); i++){

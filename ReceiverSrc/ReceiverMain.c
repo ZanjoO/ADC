@@ -61,7 +61,7 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 }
 
 int main(void){
-    unsigned short *puffer[BUF/SIZESHORT];
+    unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
 
     //Create Client network socket
@@ -70,8 +70,6 @@ int main(void){
         error_func("Couldn't initialize network socket.");
     }
 
-
-    unsigned short test = 0;
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
