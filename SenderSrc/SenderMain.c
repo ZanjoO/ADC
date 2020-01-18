@@ -131,9 +131,9 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
+		memset(res, 0 , (BUF/SIZESHORT));
 
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
-			memset(res, 0 , (BUF/SIZESHORT));
 			data[0] = 0x01;
 			data[1] = 0x80;
 			data[2] = 0x00;
@@ -142,7 +142,7 @@ int main (void){
 		}
 		//convertHostShortToNetShort(res, toSend); Both systems work with little endian only caused trouble with garbage values
 		for(int i = 0; i < sizeof(res); i++){
-			printf("%u", res[i]);
+			printf("%u \n", res[i]);
 		}
 
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
