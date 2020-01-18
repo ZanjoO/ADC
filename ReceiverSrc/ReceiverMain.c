@@ -72,6 +72,7 @@ int main(void){
 
 
     unsigned short *test;
+    memset(test, 0, sizeof(test));
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
