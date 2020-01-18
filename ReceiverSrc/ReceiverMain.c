@@ -79,7 +79,7 @@ int main(void){
 
         for (int i = 0; i < 724; i++)
         {
-            printf("%hu \n", puffer[i]);
+            printf("%u \n", puffer[i]);
         }
     }
 }
