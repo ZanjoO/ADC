@@ -8,8 +8,9 @@
 #include <netinet/in.h>
 
 #define PORT 50141
-#define BUF 11584
+#define BUF 12000
 #define SIZESHORT 16
+#define ARRAYSIZE 724
 
 /**
  * Std-method which gets a call when an error occured and exits the program.
@@ -61,9 +62,9 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 }
 
 int main(void){
-    unsigned short puffer[BUF/SIZESHORT];
-    unsigned short res[BUF/SIZESHORT];
-    memset(puffer, 0, (BUF/SIZESHORT));
+    unsigned short puffer[ARRAYSIZE];
+    unsigned short res[ARRAYSIZE];
+    memset(puffer, 0, BUF);
 
     //Create Client network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
@@ -75,8 +76,8 @@ int main(void){
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
     {
-        receiveData (&sock, puffer, (BUF/SIZESHORT));
-        //convertNetShortToHostShort(puffer, res);
+        receiveData (&sock, puffer, BUF);
+        convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < sizeof(res); i++)
         {
