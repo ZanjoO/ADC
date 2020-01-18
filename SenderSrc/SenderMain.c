@@ -146,6 +146,7 @@ int main (void){
 		}
 
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
+		free(res);
 
 	}	
 }
