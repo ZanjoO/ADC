@@ -76,18 +76,11 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-
-        for (int z = 0; z < sizeof(puffer); z++)
-        {
-            printf("%u \n", puffer);
-        }
-        sleep(15);
-
         convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf(" %u \n", res[i]);
+            printf("%u\n", res[i]);
         }
         
     }
