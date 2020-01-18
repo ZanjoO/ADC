@@ -74,11 +74,11 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, BUF);
-        convertHostShortToNetShort(puffer, res);
+        convertNetShortToHostShort(puffer, res);
         
         for (int i = 0; i < sizeof(res); i++){
             printf("%hi", res[i]);
         }
-        
+
     }
 }
