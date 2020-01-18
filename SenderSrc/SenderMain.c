@@ -46,7 +46,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	struct sockaddr_in6 server;
 	memset( &server, 0, sizeof(server) );
 	server.sin6_family = AF_INET6;
-	server.sin6_addr.s_addr = htonl( adress );
+	server.sin6_addr.s6_addr = htonl( adress );
 	server.sin6_port = htons( port );
 	
 	if( bind( *sock, (struct sockaddr*)&server, sizeof(server)) < 0 ){
@@ -55,7 +55,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 }
 
 void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
-		struct sockaddr_in target;
+		struct sockaddr_in6 target;
 		struct hostent *h;
 		int rc;
 		
@@ -63,9 +63,9 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
-		target.sin_family = h->h_addrtype;
-		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
-		target.sin_port = htons( PORT );
+		target.sin6_family = h->h_addrtype;
+		memcpy ( (char*)&target.sin6_addr.s6_addr, h->h_addr_list[0], h->h_length );
+		target.sin6_port = htons( PORT );
 
 		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
@@ -86,7 +86,7 @@ int main (void){
 	}
 
 	//Bind service to specified port
-	bind_Service(&sock, INADDR_ANY, 0);
+	bind_Service(&sock, IN6ADDR_ANY, 0);
 	printf("Ok.\n");
 
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
