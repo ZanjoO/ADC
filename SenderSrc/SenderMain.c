@@ -130,6 +130,7 @@ int main (void){
 	unsigned char data[3];
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
+	unsigned short test;
 
 	while(1){
 
@@ -139,13 +140,12 @@ int main (void){
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
-			res[i] = doDecimal(data);
+			test = doDecimal(data);
 		}
 		//convertHostShortToNetShort(res, toSend); Both systems work with little endian only caused trouble with garbage values
-		
+		printf("%u", test);
 		for(int i = 0; i < sizeof(res); i++){
-			printf("%u\n", &res[i]);
-			printf("%o\n", &res[i]);
+			
 		}
 
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
