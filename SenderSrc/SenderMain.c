@@ -32,14 +32,11 @@ unsigned short doDecimal( unsigned char data[] ){
 }
 
 //Helper function to convert the unsigned shorts from host-byte-order to network-byte-order to prevent Big&Little endian erros
-unsigned short* convertHostShortToNetShort(unsigned short *toConvert){
-	unsigned short result[sizeof(toConvert)];
+void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
 
-	for (int i = 0; i < sizeof(toConvert); i++){
-		result[i] = htons(toConvert[i]);
-	}
-	
-	return result;	 
+	for (int i = 0; i < sizeof(givenArray); i++){
+		convertedArray[i] = htons(&givenArray[i]);
+	}	 
 }
 
 
@@ -105,6 +102,7 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
+	unsigned short res[BUF/16];
 	unsigned short toSend[BUF/16]; //Space for 256 samples
 	while(1){
 		/**
@@ -117,14 +115,14 @@ int main (void){
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
-			toSend[i] = doDecimal(data);
+			res[i] = doDecimal(data);
 		}
 		/**
 		 * Here we add a new thread which is transforming the array to network byte order and sends it to the receiver
 		 * The advantage is that the programm can keep going while sending
 		 * Maybe a que is needed because gathering is faster than transforming. Maybe increase BUF then, but would result in higher delay.
 		*/
-		convertHostShortToNetShort(toSend);
+		convertHostShortToNetShort(res, toSend);
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
 	}	
 }
