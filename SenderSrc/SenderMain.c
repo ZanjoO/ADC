@@ -78,7 +78,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		struct hostent *h;
 		int rc;
 		
-		h = gethostbyname(addr); //Deprecated use getaddrinfo(); 
+		h = gethostbyname(addr); //Deprecated better use getaddrinfo(); 
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
@@ -118,7 +118,7 @@ int main (void){
 	}
 	
 /**
- * This is the programs main loop to gather data and send'em via network.
+ * This is the programs main loop area to gather data and send'em via network.
 */
 
 /**
@@ -145,7 +145,7 @@ int main (void){
 }
 
 /*
- *Author: S.P. Nuerenberg
+ *Author: S.P. Nürenberg
  *
  * Description: A Software to gather Signals from the MCP3008 ADC which got amplified by the LT1638 R-R OpAMp.
  * The gathered audio signals are streamed over the network to another debian based computer via udp.
