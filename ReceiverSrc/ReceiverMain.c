@@ -75,9 +75,8 @@ int main(void){
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
     {
-        //receiveData (&sock, puffer, (BUF/SIZESHORT));
-        //convertNetShortToHostShort(puffer, res);
-        read(sock, res, sizeof(res));
+        receiveData (&sock, puffer, (BUF/SIZESHORT));
+        convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < 724; i++)
         {

@@ -50,8 +50,8 @@ unsigned short doDecimal( unsigned char data[] ){
 */
 void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
 
-	for (int i = 0; i < sizeof(givenArray); i++){
-		convertedArray[i] = htons(givenArray[i]);
+	for (int i = 0; i < (BUF/SIZESHORT)); i++){
+		convertedArray[i] = htons(&givenArray[i]);
 	}	 
 }
 
@@ -131,18 +131,17 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
-		memset(res, 0 , sizeof(res));
-
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
 			res[i] = doDecimal(data);
+			printf("%u", res[i]);
 		}
-		//convertHostShortToNetShort(res, toSend);
-		//send_Data(&sock, res, sizeof(res), addr, PORT);
-		write(sock, res, sizeof(res));
+		convertHostShortToNetShort(res, toSend);
+		send_Data(&sock, res, sizeof(res), addr, PORT);
+
 	}	
 }
 
