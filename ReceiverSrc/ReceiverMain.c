@@ -18,7 +18,7 @@ void error_func(char *errormsg){
 void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof(server) );
-	server.sin_family = AF_INET;
+	server.sin_family = AF_INET6;
 	server.sin_addr.s_addr = htonl( adress );
 	server.sin_port = htons( port );
 	
@@ -43,7 +43,7 @@ int main(void){
     unsigned short puffer;
 
     //Create Client network socket
-    int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
+    int sock = socket( AF_INET6, SOCK_DGRAM, 0 );    
     if ( sock < 0 ){
         error_func("Couldn't initialize network socket.");
     }

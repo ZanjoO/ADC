@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <time.h>
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
