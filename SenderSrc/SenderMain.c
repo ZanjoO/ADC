@@ -131,7 +131,7 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
-		memset(res, 0 , (BUF/SIZESHORT));
+		memset(res, 0 , (BUF/SIZESHORT)*sizeof(short));
 
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
