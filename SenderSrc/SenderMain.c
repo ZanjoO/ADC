@@ -15,7 +15,7 @@
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 4096 //Buff for 256 Samples each round in shorts
+#define BUF 8192 //Buff for 512 Samples each round in shorts
 
 //Method which gets called when on error occured.
 void error_func(char *errormsg){
@@ -48,7 +48,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	server.sin_port = htons( port );
 	
 	if( bind( *sock, (struct sockaddr*)&server, sizeof(server)) < 0 ){
-		error_func("Error while binding service to port");
+		error_func("Error while binding service to port\n");
 	}
 }
 
@@ -59,7 +59,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		
 		h = gethostbyname(addr);
 		if(h == NULL){
-			error_func("Unkown host.");
+			error_func("Unkown host.\n");
 		}
 		target.sin_family = h->h_addrtype;
 		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
@@ -67,7 +67,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 
 		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
-			error_func("Couldn't send data.");
+			error_func("Couldn't send data.\n");
 		}
 }
 
@@ -77,7 +77,7 @@ int main (void){
  * 
 */
 	//Request a socket
-	printf("Start to etablish network connection, wait...");
+	printf("Start to etablish network connection, wait...\n");
 	int sock = socket( AF_INET, SOCK_DGRAM, 0 );
 	if( sock < 0 ){
 		error_func( "Error occured while requesting the network socket. \n" );
@@ -85,13 +85,12 @@ int main (void){
 
 	//Bind service to specified port
 	bind_Service(&sock, INADDR_ANY, 0);
-
-	printf("Ok.");
+	printf("Ok.\n");
 
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf( "Setup the SPI interface..\n" );
 	if( wiringPiSetup() || wiringPiSPISetup( CHAN, SPEED ) < 0 ){
-		error_func("Failed to setup SPI-Bus.");
+		error_func("Failed to setup SPI-Bus.\n");
 	}
 	else{
 		printf( "Ok.\n" );
@@ -118,9 +117,7 @@ int main (void){
 			res[i] = doDecimal(data);
 		}
 		/**
-		 * Here we add a new thread which is transforming the array to network byte order and sends it to the receiver
-		 * The advantage is that the programm can keep going while sending
-		 * Maybe a que is needed because gathering is faster than transforming. Maybe increase BUF then, but would result in higher delay.
+		 * Whats possible here is to add a que and pass it to another thread.
 		*/
 		convertHostShortToNetShort(res, toSend);
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
