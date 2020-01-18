@@ -79,7 +79,7 @@ int main(void){
 
         for (int z = 0; z < sizeof(puffer); z++)
         {
-            printf("%hn \n", puffer);
+            printf("%u \n", puffer);
         }
         sleep(15);
 
@@ -87,7 +87,7 @@ int main(void){
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf(" %hn \n", res[i]);
+            printf(" %u \n", res[i]);
         }
         
     }
