@@ -79,7 +79,7 @@ int main(void){
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf("%hu", res[i]);
+            printf("%hu \n", res[i]);
         }
         
     }
