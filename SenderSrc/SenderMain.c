@@ -42,14 +42,14 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 }
 
 
-void bind_Service(int *sock, unsigned long adress, unsigned short port){
+void bind_Service(int *sock, const struct adress, unsigned short port){
 	struct sockaddr_in6 server;
 	memset( &server, 0, sizeof(server) );
 	server.sin6_family = AF_INET6;
-	server.sin6_addr = htonl( adress );
+	server.sin6_addr = adress;
 	server.sin6_port = htons( port );
 	
-	if( bind( *sock, (struct sockaddr*)&server, sizeof(server)) < 0 ){
+	if( bind( *sock, (struct sockaddr_in6*)&server, sizeof(server)) < 0 ){
 		error_func("Error while binding service to port: ");
 	}
 }
