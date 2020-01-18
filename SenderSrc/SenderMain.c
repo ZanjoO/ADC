@@ -145,6 +145,7 @@ int main (void){
 		
 		for(int i = 0; i < sizeof(res); i++){
 			printf("%u\n", &res[i]);
+			printf("%o\n", &res[i]);
 		}
 
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
