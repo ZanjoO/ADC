@@ -45,9 +45,8 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 void bind_Service(int *sock, unsigned short port){
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof( server ));
-	server.sin_len = sizeof( server );
 	server.sin_family = AF_INET;
-	server.sin_addr = htonl( INADDR_ANY );
+	server.sin_addr.s_addr = htonl( INADDR_ANY );
 	server.sin_port = htons( port );
 
 	if( bind( *sock, ( struct sockaddr * )&server, sizeof( server )) < 0 ){
