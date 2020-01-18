@@ -16,7 +16,7 @@
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 8192 //Buff for 512 Samples each round in shorts
+#define BUF 11584 //Buff for 724 Samples each round in shorts. Inlcusive Ethernet/IP/UDP headers packages are 1500bytes.
 #define SIZESHORT 16
 
 //Method which gets called when on error occured.
