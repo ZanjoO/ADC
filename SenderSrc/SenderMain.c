@@ -141,7 +141,8 @@ int main (void){
 			res[i] = doDecimal(data);
 		}
 		//convertHostShortToNetShort(res, toSend);
-		send_Data(&sock, res, sizeof(res), addr, PORT);
+		//send_Data(&sock, res, sizeof(res), addr, PORT);
+		write(sock, res, sizeof(res))
 	}	
 }
 
