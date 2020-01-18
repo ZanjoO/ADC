@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 
 #define PORT 50141
-#define BUF 4096
+#define BUF 11584
 #define SIZESHORT 16
 
 /**
@@ -75,7 +75,12 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
+        printf("1%d\n", sizeof(puffer));
+        printf("%u\n", puffer[0])
         convertNetShortToHostShort(puffer, res);
+
+        printf("2%d\n", sizeof(puffer));
+        printf("%u\n", puffer[0])
 
         for (int i = 0; i < sizeof(res); i++)
         {

@@ -24,7 +24,7 @@
 #define SPEED 3600000
 #define LEN 3
 #define PORT 50141
-#define BUF 4096 
+#define BUF 11584 
 #define SIZESHORT 16
 
 /**
