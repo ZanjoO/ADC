@@ -142,7 +142,7 @@ int main (void){
 		}
 		//convertHostShortToNetShort(res, toSend);
 		//send_Data(&sock, res, sizeof(res), addr, PORT);
-		write(sock, res, sizeof(res))
+		write(sock, res, sizeof(res));
 	}	
 }
 
