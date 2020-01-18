@@ -74,7 +74,7 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, BUF);
-        printf(puffer);
+        printf("%hi", puffer);
 
     }
 }
