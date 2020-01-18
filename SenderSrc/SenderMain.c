@@ -86,7 +86,7 @@ int main (void){
 	}
 
 	//Bind service to specified port
-	bind_Service(&sock, IN6ADDR_ANY, 0);
+	bind_Service(&sock, IN6ADDR_ANY_INIT, 0);
 	printf("Ok.\n");
 
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
