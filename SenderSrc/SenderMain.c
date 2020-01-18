@@ -32,7 +32,7 @@ unsigned short doDecimal( unsigned char data[] ){
 }
 
 //Helper function to convert the unsigned shorts from host-byte-order to network-byte-order to prevent Big&Little endian erros
-unsigned short convertHostShortToNetShort(unsigned short toConvert){
+unsigned short convertHostShortToNetShort(unsigned short *toConvert){
 	unsigned short result[sizeof(toConvert)];
 
 	for (int i = 0; i < sizeof(toConvert); i++){
@@ -106,7 +106,7 @@ int main (void){
 	char *addr = "zanjoo";
 	unsigned char data[3];
 	unsigned short toSend[BUF/16]; //Space for 256 samples
-	while(true){
+	while(1){
 		/**
 		 * The Method wiringPISPIDataRW always rewrite the array data caused by the natural design of SPI.
 		 * This is lack of performance. If someone knows a fix for that i would appreciate. 
@@ -125,7 +125,7 @@ int main (void){
 		 * Maybe a que is needed because gathering is faster than transforming. Maybe increase BUF then, but would result in higher delay.
 		*/
 		convertHostShortToNetShort(toSend);
-		send_Data(&sock, &toSend, sizeof(toSend), addr, PORT);
+		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
 	}	
 }
 
