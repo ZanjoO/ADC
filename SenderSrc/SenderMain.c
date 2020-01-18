@@ -16,7 +16,7 @@
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 16384 //Buff for 1024 Samples each round in shorts
+#define BUF 8192 //Buff for 512 Samples each round in shorts
 #define SIZESHORT 16
 
 //Method which gets called when on error occured.
@@ -43,13 +43,12 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 
 
 void bind_Service(int *sock, unsigned short port){
-	struct sockaddr_in6 server;
+	struct sockaddr_in server;
 	memset( &server, 0, sizeof( server ));
-	server.sin6_len = sizeof( server );
-	server.sin6_family = AF_INET6;
-	server.sin6_addr = in6addr_any;
-	server.sin6_flowinfo = 0;
-	server.sin6_port = htons( port );
+	server.sin_len = sizeof( server );
+	server.sin_family = AF_INET;
+	server.sin_addr = htonl( INADDR_ANY );
+	server.sin_port = htons( port );
 
 	if( bind( *sock, ( struct sockaddr * )&server, sizeof( server )) < 0 ){
 		error_func("Error while binding service to port: ");
@@ -57,17 +56,17 @@ void bind_Service(int *sock, unsigned short port){
 }
 
 void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
-		struct sockaddr_in6 target;
+		struct sockaddr_in target;
 		struct hostent *h;
 		int rc;
 		
-		h = getaddrinfo(addr);
+		h = gethostbyname(addr);
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
-		target.sin6_family = h->h_addrtype;
-		memcpy ( (char*)&target.sin6_addr.s6_addr, h->h_addr_list[0], h->h_length );
-		target.sin6_port = htons( PORT );
+		target.sin_family = h->h_addrtype;
+		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
+		target.sin_port = htons( PORT );
 
 		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
@@ -82,7 +81,7 @@ int main (void){
 */
 	//Request a socket
 	printf("Start to etablish network connection, wait...\n");
-	int sock = socket( AF_INET6, SOCK_DGRAM, 0 );
+	int sock = socket( AF_INET, SOCK_DGRAM, 0 );
 	if( sock < 0 ){
 		error_func( "Error occured while requesting the network socket: " );
 	}
