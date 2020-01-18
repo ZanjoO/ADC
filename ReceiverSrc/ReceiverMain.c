@@ -80,7 +80,7 @@ int main(void){
 
         printf("%u\n" ,puffer);
         sleep(3);
-        printf("%u", res)
+        printf("%u", res);
         
     }
 }
