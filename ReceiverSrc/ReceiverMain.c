@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 
 #define PORT 50141
-#define BUF 2048
+#define BUF 8192
 
 void error_func(char *errormsg){
 	fprintf(stderr, "%s: %s, \n", errormsg, strerror(errno));

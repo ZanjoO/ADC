@@ -48,7 +48,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	server.sin_port = htons( port );
 	
 	if( bind( *sock, (struct sockaddr*)&server, sizeof(server)) < 0 ){
-		error_func("Error while binding service to port\n");
+		error_func("Error while binding service to port: ");
 	}
 }
 
@@ -59,7 +59,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		
 		h = gethostbyname(addr);
 		if(h == NULL){
-			error_func("Unkown host.\n");
+			error_func("Unkown host: ");
 		}
 		target.sin_family = h->h_addrtype;
 		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
@@ -67,7 +67,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 
 		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
-			error_func("Couldn't send data.\n");
+			error_func("Couldn't send data: ");
 		}
 }
 
@@ -80,7 +80,7 @@ int main (void){
 	printf("Start to etablish network connection, wait...\n");
 	int sock = socket( AF_INET, SOCK_DGRAM, 0 );
 	if( sock < 0 ){
-		error_func( "Error occured while requesting the network socket. \n" );
+		error_func( "Error occured while requesting the network socket: " );
 	}
 
 	//Bind service to specified port
@@ -90,7 +90,7 @@ int main (void){
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
 	printf( "Setup the SPI interface..\n" );
 	if( wiringPiSetup() || wiringPiSPISetup( CHAN, SPEED ) < 0 ){
-		error_func("Failed to setup SPI-Bus.\n");
+		error_func("Failed to setup SPI-Bus: ");
 	}
 	else{
 		printf( "Ok.\n" );
