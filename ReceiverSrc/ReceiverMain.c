@@ -71,8 +71,7 @@ int main(void){
     }
 
 
-    unsigned short *test;
-    memset(test, 0, sizeof(test));
+    unsigned short test = 0;
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
@@ -86,7 +85,7 @@ int main(void){
             printf("%hu \n", res[i]);
         }
         */
-       receiveData(&sock, test, 2*sizeof(short));
+       receiveData(&sock, test, BUF);
         
     }
 }
