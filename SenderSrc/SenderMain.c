@@ -32,7 +32,7 @@ unsigned short doDecimal( unsigned char data[] ){
 }
 
 //Helper function to convert the unsigned shorts from host-byte-order to network-byte-order to prevent Big&Little endian erros
-unsigned short convertHostShortToNetShort(unsigned short *toConvert){
+unsigned short* convertHostShortToNetShort(unsigned short *toConvert){
 	unsigned short result[sizeof(toConvert)];
 
 	for (int i = 0; i < sizeof(toConvert); i++){
