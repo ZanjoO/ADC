@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 
 #define PORT 50141
-#define BUF 11584
+#define BUF 4096
 #define SIZESHORT 16
 
 /**
