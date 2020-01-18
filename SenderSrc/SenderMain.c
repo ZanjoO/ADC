@@ -86,7 +86,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
 		target.sin_port = htons( PORT );
 
-		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
+		rc = sendto(*sock, &data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
 			error_func("Couldn't send data: ");
 		}
