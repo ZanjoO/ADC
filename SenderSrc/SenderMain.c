@@ -130,8 +130,6 @@ int main (void){
 	unsigned char data[3];
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
-	unsigned short test;
-
 	while(1){
 
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
@@ -143,7 +141,6 @@ int main (void){
 			res[i] += doDecimal(data);
 		}
 		//convertHostShortToNetShort(res, toSend); Both systems work with little endian only caused trouble with garbage values
-		printf("%u", test);
 		for(int i = 0; i < sizeof(res); i++){
 			printf("%u", res[i]);
 		}
