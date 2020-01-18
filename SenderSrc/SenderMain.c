@@ -45,9 +45,9 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 void bind_Service(int *sock, unsigned short port){
 	struct sockaddr_in6 server;
 	memset( &server, 0, sizeof( server ));
-	server.sin6_len = sizeof( server )
+	server.sin6_len = sizeof( server );
 	server.sin6_family = AF_INET6;
-	server.sin6_addr = in6_addr_any;
+	server.sin6_addr = in6addr_any;
 	server.sin6_flowinfo = 0;
 	server.sin6_port = htons( port );
 
@@ -61,7 +61,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		struct hostent *h;
 		int rc;
 		
-		h = getaddrinf(addr);
+		h = getaddrinfo(addr);
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
