@@ -93,7 +93,7 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short *res; //Convert to array for exp new thread for sending with que
+	unsigned short res; //Convert to array for exp new thread for sending with que
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
