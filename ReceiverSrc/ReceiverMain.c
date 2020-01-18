@@ -60,8 +60,10 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 }
 
 int main(void){
-    unsigned short puffer[BUF/SIZESHORT];
+    unsigned short puffer[BUF];
     unsigned short res[BUF/SIZESHORT];
+    memset(puffer, 0, BUF);
+    memset(res,0,BUF);
 
     //Create Client network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
@@ -74,7 +76,7 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, BUF);
-        //convertNetShortToHostShort(puffer, res);
+        convertNetShortToHostShort(puffer, res);
         
         for (int i = 0; i < sizeof(res); i++){
             printf("%hi", res[i]);
