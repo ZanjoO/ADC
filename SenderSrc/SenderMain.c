@@ -136,13 +136,14 @@ int main (void){
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
-			res[i] = doDecimal(data);
+			res[i] = htons(doDecimal(data));
 		}
 		convertHostShortToNetShort(res, toSend);
 //BIS HIER KLABBET
-		for(int k = 0; k < 724; k++){
+		for(int k = 0; k < (BUF/SIZESHORT); k++){
 			printf("%u\n", res[k]);
 			printf("%u \n", toSend[k]);
+			//HTONS is nicht konsistent?
 		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
 
