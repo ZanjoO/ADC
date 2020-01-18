@@ -75,7 +75,7 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        convertNetShortToHostShort(puffer, res);
+        //convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < sizeof(res); i++)
         {
