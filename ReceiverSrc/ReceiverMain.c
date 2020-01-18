@@ -62,6 +62,13 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 	}	 
 }
 
+void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
+
+	for (int i = 0; i < (BUF/SIZESHORT); i++){
+		convertedArray[i] = htons(givenArray[i]);
+	}	 
+}
+
 int main(void){
     unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
@@ -76,11 +83,11 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        convertNetShortToHostShort(puffer, res);
+        convertHostShortToNetShort(puffer, res);
 
         for (int i = 0; i < 724; i++)
         {
-            printf("%u \n", puffer[i]);
+            printf("%u \n", res[i]);
         }
 
      

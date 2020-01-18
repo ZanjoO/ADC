@@ -143,7 +143,7 @@ int main (void){
 		for(int k = 0; k < (BUF/SIZESHORT); k++){
 			printf("%u\n", res[k]);
 			printf("%u \n", toSend[k]);
-			//HTONS is nicht konsistent?
+			//HTONS is nicht konsistent? Zwei mal Htons gibt wieder normal wert..
 		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
 
