@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <time.h>
 
 #define PORT 50141
 #define BUF 11584
@@ -75,12 +76,18 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        //convertNetShortToHostShort(puffer, res);
 
+        for (int z = 0; z < sizeof(puffer); z++)
+        {
+            printf("%h \n", puffer);
+        }
+        sleep(15);
+
+        convertNetShortToHostShort(puffer, res);
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf("%hu\n", res[i]);
+            printf("%h \n", res[i]);
         }
         
     }
