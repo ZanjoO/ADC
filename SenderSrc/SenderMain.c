@@ -93,15 +93,16 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short res; //Convert to array for exp new thread for sending with que
+	unsigned short *res; //Convert to array for exp new thread for sending with que
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
 	while(1){
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		res = htons(doDecimal(res)); //Convert from host to network byte order
-		send_Data(&sock, doDecimal(data), sizeof(doDecimal(data)), addr, PORT);
+		&res = htons(doDecimal(*res)); //Convert from host to network byte order
+		send_Data(&sock, &res, sizeof(res), addr, PORT);
+	}	
 }
 /*
  *Author: S.P. Nuerenberg
