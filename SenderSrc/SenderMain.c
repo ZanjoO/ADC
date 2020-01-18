@@ -46,7 +46,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
 		struct sockaddr_in target;
 		struct hostent *h;
-		int received;
+		int rc;
 		
 		h = gethostbyname(addr);
 		if(h == NULL){
@@ -56,8 +56,8 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
 		target.sin_port = htons( PORT );
 
-		received = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
-		if( received < 0 ){
+		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
+		if( rc < 0 ){
 			error_func("Couldn't send data.");
 		}
 }
@@ -100,8 +100,8 @@ int main (void){
 	while(1){
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		res = htons(doDecimal(data)); //Convert from host to network byte order
-		send_Data(&sock, res, sizeof(res), addr, PORT);
+		res = (short unsigned int *)htons(doDecimal(data)); //Convert from host to network byte order
+		send_Data(&sock, res, sizeof(&res), addr, PORT);
 	}	
 }
 /*
