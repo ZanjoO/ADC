@@ -35,7 +35,7 @@ unsigned short doDecimal( unsigned char data[] ){
 void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
-		convertedArray[i] = htons(&givenArray[i]);
+		convertedArray[i] = htons(givenArray[i]);
 	}	 
 }
 
