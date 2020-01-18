@@ -53,6 +53,8 @@ void receiveData( int *sock, unsigned short *data, int size){
 /**
  * Helper function to convert the net-byte-order to the host-byte-order
 */
+void reconstructValues(unsigned short *puffer, unsigned short *res);
+
 void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *convertedArray){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
@@ -70,6 +72,7 @@ int main(void){
         error_func("Couldn't initialize network socket.");
     }
 
+unsigned short test = 0;
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
@@ -81,5 +84,8 @@ int main(void){
         {
             printf("%u \n", puffer[i]);
         }
+
+        memcpy(test, puffer, 2);
+        printf("%u", test);
     }
 }
