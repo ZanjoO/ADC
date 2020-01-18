@@ -42,14 +42,16 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 }
 
 
-void bind_Service(int *sock, const struct adress, unsigned short port){
+void bind_Service(int *sock, unsigned short port){
 	struct sockaddr_in6 server;
-	memset( &server, 0, sizeof(server) );
+	memset( &server, 0, sizeof( server ));
+	server.sin6_len = sizeof( server )
 	server.sin6_family = AF_INET6;
-	server.sin6_addr = adress;
+	server.sin6_addr = in6_addr_any;
+	server.sin6_flowinfo = 0;
 	server.sin6_port = htons( port );
-	
-	if( bind( *sock, (struct sockaddr_in6*)&server, sizeof(server)) < 0 ){
+
+	if( bind( *sock, ( struct sockaddr * )&server, sizeof( server )) < 0 ){
 		error_func("Error while binding service to port: ");
 	}
 }
@@ -86,7 +88,7 @@ int main (void){
 	}
 
 	//Bind service to specified port
-	bind_Service(&sock, in6addr_any, 0);
+	bind_Service(&sock, 0);
 	printf("Ok.\n");
 
 	//Setup the SPI-Bus on CE0 and init. CLK.     	
