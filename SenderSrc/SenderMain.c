@@ -100,8 +100,8 @@ int main (void){
 	while(1){
 
 		wiringPiSPIDataRW( CS, data, LEN );
-		res = (short unsigned int *)htons(doDecimal(data)); //Convert from host to network byte order
-		send_Data(&sock, res, sizeof(&res), addr, PORT);
+		res = htons(doDecimal(data)); //Convert from host to network byte order
+		send_Data(&sock, &res, sizeof(res), &addr, PORT);
 	}	
 }
 /*
