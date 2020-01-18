@@ -134,7 +134,7 @@ int main (void){
 	while(1){
 
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
-			memset(res, 0 , (BUF/SIZESHORT))
+			//memset(res, 0 , (BUF/SIZESHORT));
 			data[0] = 0x01;
 			data[1] = 0x80;
 			data[2] = 0x00;
