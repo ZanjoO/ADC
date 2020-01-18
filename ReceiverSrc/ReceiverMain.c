@@ -41,6 +41,7 @@ void receiveData( int *sock, unsigned short *data, size_t size){
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
+    memset(data, 0, size);
 
     len = sizeof( fromWhere );
     n = recvfrom( *sock, data, size, 0, ( struct sockaddr*) &fromWhere, &len);
@@ -60,7 +61,7 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 }
 
 int main(void){
-    unsigned short puffer[BUF];
+    unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
 
     //Create Client network socket
@@ -73,8 +74,14 @@ int main(void){
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
     {
-        receiveData (&sock, puffer, BUF);
-        printf("%hn", puffer);
+        receiveData (&sock, puffer, (BUF/SIZESHORT));
+        convertNetShortToHostShort(puffer, res);
 
+
+        for (int i = 0; i < sizeof(res); i++)
+        {
+            printf("%hu\n", res[i]);
+        }
+        
     }
 }

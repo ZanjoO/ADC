@@ -138,7 +138,6 @@ int main (void){
 			wiringPiSPIDataRW( CS, data, LEN );
 			res[i] = doDecimal(data);
 		}
-
 		convertHostShortToNetShort(res, toSend);
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
 	}	
