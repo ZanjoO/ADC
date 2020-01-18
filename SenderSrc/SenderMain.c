@@ -10,22 +10,34 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-#define CS 10 //Chip select Pin
-#define CHAN 0 //Channel 0/1 CE
-#define SPEED 3600000 //Bus speed
-#define LEN 3 //Length of expected bytes
-
-#define PORT 50141 //Hardcoded default port
-#define BUF 11584 //Buff for 724 Samples each round in shorts. Inlcusive Ethernet/IP/UDP headers packages are 1500bytes.
+/**
+ * CS = Chip select pin.
+ * CHAN = Channel (Pi has 0 or 1)
+ * SPEED = The SPI Bus clock
+ * LEN = Expected returned bytes of wiringPiSPIDataRW function
+ * PORT = The port on which this service get bind and where the receiver have to listen to
+ * BUF = A buffer for 724 samples of type unsigned short.
+ * SIZESHORT = size if type short in bit
+*/
+#define CS 10
+#define CHAN 0
+#define SPEED 3600000
+#define LEN 3
+#define PORT 50141
+#define BUF 11584 
 #define SIZESHORT 16
 
-//Method which gets called when on error occured.
+/**
+ * Std-method which gets a call when an error occured and exits the program.
+*/
 void error_func(char *errormsg){
 	fprintf(stderr, "%s: %s, \n", errormsg, strerror(errno));
 	exit(EXIT_FAILURE);
 }
 
-//Helper function which shifts bits to get 10 Bit resolution from adc out of given char array.
+/**
+ * Helper function which shifts bits to get 10 Bit resolution from adc out of given char array. 
+*/
 unsigned short doDecimal( unsigned char data[] ){
 	unsigned short result;
 	result = ((data[1] & 0x03)<<8) | data[2];
@@ -33,7 +45,9 @@ unsigned short doDecimal( unsigned char data[] ){
 	return result;
 }
 
-//Helper function to convert the unsigned shorts from host-byte-order to network-byte-order to prevent Big&Little endian erros
+/**
+ * Helper function which converts a array of short in host-byte-order to network-byte-order
+*/
 void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
@@ -41,7 +55,9 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 	}	 
 }
 
-
+/**
+ * Function to bind this service to an specific port.
+*/
 void bind_Service(int *sock, unsigned short port){
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof( server ));
@@ -54,12 +70,15 @@ void bind_Service(int *sock, unsigned short port){
 	}
 }
 
+/**
+ * Function to send the gathered data via udp to port.
+*/
 void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
 		struct sockaddr_in target;
 		struct hostent *h;
 		int rc;
 		
-		h = gethostbyname(addr);
+		h = gethostbyname(addr); //Deprecated use getaddrinfo(); 
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
@@ -74,22 +93,22 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 }
 
 int main (void){
+
 /**
- * This area initiate the network communication for the application
- * 
+ * Area where the network gets initialized.
 */
-	//Request a socket
 	printf("Start to etablish network connection, wait...\n");
 	int sock = socket( AF_INET, SOCK_DGRAM, 0 );
 	if( sock < 0 ){
 		error_func( "Error occured while requesting the network socket: " );
 	}
 
-	//Bind service to specified port
 	bind_Service(&sock, 0);
 	printf("Ok.\n");
 
-	//Setup the SPI-Bus on CE0 and init. CLK.     	
+/**
+ * Initializing the SPI-Bus.
+*/    	
 	printf( "Setup the SPI interface..\n" );
 	if( wiringPiSetup() || wiringPiSPISetup( CHAN, SPEED ) < 0 ){
 		error_func("Failed to setup SPI-Bus: ");
@@ -98,19 +117,20 @@ int main (void){
 		printf( "Ok.\n" );
 	}
 	
-	//Main loop for gathering the data from the ADC via SPI-Bus.
+/**
+ * This is the programs main loop to gather data and send'em via network.
+*/
+
+/**
+ * As given in the datasheet of the MCP3008 i toogle to initiate communication.
+*/
 	digitalWrite( CS, 1 );
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
 	unsigned short res[BUF/SIZESHORT];
-	unsigned short toSend[BUF/SIZESHORT]; //Space for 256 samples
+	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
-		/**
-		 * The Method wiringPISPIDataRW always rewrite the array data caused by the natural design of SPI.
-		 * This is lack of performance. If someone knows a fix for that i would appreciate. 
-		 * 
-		*/
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
 			data[1] = 0x80;
@@ -118,9 +138,7 @@ int main (void){
 			wiringPiSPIDataRW( CS, data, LEN );
 			res[i] = doDecimal(data);
 		}
-		/**
-		 * Whats possible here is to add a que and pass it to another thread.
-		*/
+
 		convertHostShortToNetShort(res, toSend);
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
 	}	
@@ -136,4 +154,4 @@ int main (void){
  * G. Henderson for his lib. wiringPi.
  * https://projects.drogon.net/
  * 
- * */
+*/

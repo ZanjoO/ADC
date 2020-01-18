@@ -8,13 +8,20 @@
 #include <netinet/in.h>
 
 #define PORT 50141
-#define BUF 8192
+#define BUF 11584
+#define SIZESHORT 16
 
+/**
+ * Std-method which gets a call when an error occured and exits the program.
+*/
 void error_func(char *errormsg){
 	fprintf(stderr, "%s: %s, \n", errormsg, strerror(errno));
 	exit(EXIT_FAILURE);
 }
 
+/**
+ * Function to bind this service to an specific port.
+*/
 void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof(server) );
@@ -27,6 +34,9 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 	}
 }
 
+/**
+ * Function to receive the data send by the sender.
+*/
 void receiveData( int *sock, unsigned short *data, size_t size){
     struct sockaddr_in fromWhere;
     unsigned int len;
@@ -39,8 +49,19 @@ void receiveData( int *sock, unsigned short *data, size_t size){
     }
 }
 
+/**
+ * Helper function to convert the net-byte-order to the host-byte-order
+*/
+void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *convertedArray){
+
+	for (int i = 0; i < sizeof(givenArray); i++){
+		convertedArray[i] = ntohs(givenArray[i]);
+	}	 
+}
+
 int main(void){
-    unsigned short puffer;
+    unsigned short puffer[BUF/SIZESHORT];
+    unsigned short res[BUF/SIZESHORT];
 
     //Create Client network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
@@ -50,14 +71,14 @@ int main(void){
 
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
-
-    unsigned short res = 0;
     while (1)
     {
-        //memset( puffer, 0, BUF );
-        receiveData (&sock, &puffer, BUF);
-
-        res = ntohs(puffer);
-        printf("Retrieved %hi \n", res);
+        receiveData (&sock, puffer, BUF);
+        convertHostShortToNetShort(puffer, res);
+        
+        for (int i = 0; i < sizeof(res); i++){
+            printf("%hi", res[i]);
+        }
+        
     }
 }
