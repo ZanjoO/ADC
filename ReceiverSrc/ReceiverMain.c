@@ -61,7 +61,7 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 }
 
 int main(void){
-    unsigned short puffer[BUF/SIZESHORT];
+    unsigned short *puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
 
     //Create Client network socket
@@ -76,7 +76,6 @@ int main(void){
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
     {
-        /**
         receiveData (&sock, puffer, (BUF/SIZESHORT));
         convertNetShortToHostShort(puffer, res);
 
@@ -84,8 +83,5 @@ int main(void){
         {
             printf("%hu \n", res[i]);
         }
-        */
-       receiveData(&sock, test, BUF);
-        
     }
 }
