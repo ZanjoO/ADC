@@ -71,7 +71,7 @@ int main(void){
     }
 
 
-    unsigned short test;
+    unsigned short *test;
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
