@@ -141,8 +141,8 @@ int main (void){
 		convertHostShortToNetShort(res, toSend);
 //BIS HIER KLABBET
 		for(int k = 0; k < 724; k++){
-			printf("%u\n", res[i]);
-			printf("%u \n", toSend[i];
+			printf("%u\n", res[k]);
+			printf("%u \n", toSend[k]);
 		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
 
