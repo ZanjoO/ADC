@@ -83,11 +83,10 @@ int main(void){
     while (1)
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        convertHostShortToNetShort(puffer, res);
 
-        for (int i = 0; i < 724; i++)
+        for (int k = 0; k < 724; i++)
         {
-            printf("%u \n", res[i]);
+            printf("%u", puffer[k]);
         }
 
      
