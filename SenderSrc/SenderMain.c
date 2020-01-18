@@ -43,11 +43,11 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 
 
 void bind_Service(int *sock, unsigned long adress, unsigned short port){
-	struct sockaddr_in server;
+	struct sockaddr_in6 server;
 	memset( &server, 0, sizeof(server) );
-	server.sin_family = AF_INET;
-	server.sin_addr.s_addr = htonl( adress );
-	server.sin_port = htons( port );
+	server.sin6_family = AF_INET6;
+	server.sin6_addr.s6_addr = htonl( adress );
+	server.sin6_port = htons( port );
 	
 	if( bind( *sock, (struct sockaddr*)&server, sizeof(server)) < 0 ){
 		error_func("Error while binding service to port: ");
@@ -80,7 +80,7 @@ int main (void){
 */
 	//Request a socket
 	printf("Start to etablish network connection, wait...\n");
-	int sock = socket( AF_INET, SOCK_DGRAM, 0 );
+	int sock = socket( AF_INET6, SOCK_DGRAM, 0 );
 	if( sock < 0 ){
 		error_func( "Error occured while requesting the network socket: " );
 	}
