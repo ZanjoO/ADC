@@ -130,7 +130,11 @@ int main (void){
 	unsigned char data[3];
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
+
+	unsigned short test = 512;
 	while(1){
+/**
+
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
 			data[1] = 0x80;
@@ -140,6 +144,8 @@ int main (void){
 		}
 		convertHostShortToNetShort(res, toSend);
 		send_Data(&sock, toSend, sizeof(toSend), addr, PORT);
+*/
+		send_Data(&sock, test, sizeof(test), addr, PORT);
 	}	
 }
 
