@@ -15,7 +15,8 @@
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 8192 //Buff for 512 Samples each round in shorts
+#define BUF 16384 //Buff for 1024 Samples each round in shorts
+#define SIZESHORT 16
 
 //Method which gets called when on error occured.
 void error_func(char *errormsg){
@@ -101,15 +102,15 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short res[BUF/16];
-	unsigned short toSend[BUF/16]; //Space for 256 samples
+	unsigned short res[BUF/SIZESHORT];
+	unsigned short toSend[BUF/SIZESHORT]; //Space for 256 samples
 	while(1){
 		/**
 		 * The Method wiringPISPIDataRW always rewrite the array data caused by the natural design of SPI.
 		 * This is lack of performance. If someone knows a fix for that i would appreciate. 
 		 * 
 		*/
-		for(int i = 0; i < (BUF/16); i++){
+		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
 			data[1] = 0x80;
 			data[2] = 0x00;
