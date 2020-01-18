@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <time.h>
+#include <unistd.h>
 
 #define PORT 50141
 #define BUF 11584
@@ -79,7 +79,7 @@ int main(void){
 
         for (int z = 0; z < sizeof(puffer); z++)
         {
-            printf("%hu \n", puffer);
+            printf("%hn \n", puffer);
         }
         sleep(15);
 
@@ -87,7 +87,7 @@ int main(void){
 
         for (int i = 0; i < sizeof(res); i++)
         {
-            printf(" %hu \n", res[i]);
+            printf(" %hn \n", res[i]);
         }
         
     }
