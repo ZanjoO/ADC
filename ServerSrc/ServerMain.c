@@ -11,11 +11,11 @@
 
 #define CS 10 //Chip select Pin
 #define CHAN 0 //Channel 0/1 CE
-#define SPEED 2000000 //Bus speed
+#define SPEED 3600000 //Bus speed
 #define LEN 3 //Length of expected bytes
 
 #define PORT 50141 //Hardcoded default port
-#define BUF 2048
+#define BUF 4096 //Buff for 256 Samples each round in shorts
 
 //Method which gets called when on error occured.
 void error_func(char *errormsg){
@@ -93,12 +93,11 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short *res[BUF];
-	while(1){
-
+	unsigned short res; //Convert to array for exp new thread for sending with que
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
+	while(1){
 
 		wiringPiSPIDataRW( CS, data, LEN );
 		res = htons(doDecimal(res)); //Convert from host to network byte order
