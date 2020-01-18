@@ -94,10 +94,16 @@ int main (void){
 	char *addr = "zanjoo";
 	unsigned char data[3];
 	unsigned short res; //Convert to array for exp new thread for sending with que
+		
+	while(1){
+		/**
+		 * The Method wiringPISPIDataRW always rewrite the array data based on SPI communication
+		 * This is lack of performance. If someone know a fix for that i would appreciate.
+		 * 
+		*/
 		data[0] = 0x01;
 		data[1] = 0x80;
 		data[2] = 0x00;
-	while(1){
 
 		wiringPiSPIDataRW( CS, data, LEN );
 		res = htons(doDecimal(data)); //Convert from host to network byte order
@@ -108,7 +114,7 @@ int main (void){
  *Author: S.P. Nuerenberg
  *
  * Description: A Software to gather Signals from the MCP3008 ADC which got amplified by the LT1638 R-R OpAMp.
- * The gathered audio signals are streamed over the network to another debian based computer.
+ * The gathered audio signals are streamed over the network to another debian based computer via udp.
  * 
  * Thanks to: 
  * G. Henderson for his lib. wiringPi.
