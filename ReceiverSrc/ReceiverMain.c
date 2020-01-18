@@ -84,7 +84,7 @@ int main(void){
     {
         receiveData (&sock, puffer, (BUF/SIZESHORT));
 
-        for (int k = 0; k < 724; i++)
+        for (int k = 0; k < 724; k++)
         {
             printf("%u", puffer[k]);
         }
