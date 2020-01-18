@@ -137,9 +137,13 @@ int main (void){
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
 			res[i] = doDecimal(data);
-			printf("%u", res[i]);
 		}
 		convertHostShortToNetShort(res, toSend);
+//BIS HIER KLABBET
+		for(int k = 0; k < 724; k++){
+			printf("%u\n", res[i]);
+			printf("%u \n", toSend[i];
+		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
 
 	}	
