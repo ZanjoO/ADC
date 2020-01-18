@@ -71,8 +71,6 @@ int main(void){
     if ( sock < 0 ){
         error_func("Couldn't initialize network socket.");
     }
-
-unsigned short test = 0;
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
@@ -85,7 +83,6 @@ unsigned short test = 0;
             printf("%u \n", puffer[i]);
         }
 
-        memcpy(test, puffer, 2);
-        printf("%u", test);
+     
     }
 }
