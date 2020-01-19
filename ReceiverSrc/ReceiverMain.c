@@ -64,14 +64,6 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 	}	 
 }
 
-int contains(unsigned short *res){
-    for(int i = 0; i < (BUF/SIZESHORT); i++){
-        if(res[i] > 1024)
-            return -1;
-    }
-    return 0;
-}
-
 int main(void){
     unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
@@ -84,20 +76,22 @@ int main(void){
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
 
-    while (1)
+    int count = 0;
+    while (count < 1)
     {   
         memset(res, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-
         convertNetShortToHostShort(puffer, res);
-        if(contains(res) < 0)
-            error_func("Something went wrong while transform to hostbyte order.");
 
-        for(int i = 0; i < (BUF/SIZESHORT); i++){
+        for(int i = 0; i < (BUF/SIZESHORT); i++)
+        {
+            
+			printf("%u \n", puffer[i]);
             printf("%u \n", res[i]);
         }
 
+        count++;
     }
 }
