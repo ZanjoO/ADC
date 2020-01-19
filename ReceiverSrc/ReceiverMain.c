@@ -57,14 +57,14 @@ void reconstructValues(unsigned short *puffer, unsigned short *res);
 void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *convertedArray){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
-		convertedArray[i] = &ntohs(givenArray[i]);
+		*convertedArray[i] = &ntohs(givenArray[i]);
 	}	 
 }
 
 void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
 
 	for (int i = 0; i < (BUF/SIZESHORT); i++){
-		convertedArray[i] = &htons(givenArray[i]);
+		*convertedArray[i] = &htons(givenArray[i]);
 	}	 
 }
 
