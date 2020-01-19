@@ -76,7 +76,7 @@ int main(void)
 
 /**
  * Initialization of gnuplot.
- * Pipe commands for style to gnuplot after init.
+ * Pipe commands for style to gnuplot after init. Gnuplot needs to bet installed on your system!
 */
     const char* name = "Audiosignals";
     FILE *gnuPipe = popen(GPIPEG, "w");
@@ -88,7 +88,8 @@ int main(void)
     fprintf(gnuPipe, "set title '%s'\n", name);
     fprintf(gnuPipe, "set xlabel \"Time\"\n");
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
-    fprintf(gnuPipe, "set yrange[512:512]");
+    fprintf(gnuPipe, "set yrange[512:512]\n");
+    fprintf(gnupipe, "set autoscale\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
@@ -114,7 +115,7 @@ int main(void)
         for(int i = 0; i < (BUF/SIZESHORT); i++){
             fprintf(gnuPipe, "%u \n", res[i]);
         }
-        fprintf(gnuPipe, "e\n");
+        //fprintf(gnuPipe, "e\n");
         fprintf(gnuPipe, "refresh\n");
     }
 }
