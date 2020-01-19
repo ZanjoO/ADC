@@ -138,14 +138,13 @@ int main (void){
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
-			res[i] = htons(doDecimal(data));
+			res[i] = doDecimal(data);
 		}
 		convertHostShortToNetShort(res, toSend);
-		printf("res %d \n", sizeof(res));
-		printf("toSend %d \n", sizeof(toSend));
+		printf("res %d \n", sizeof(&res));
+		printf("toSend %d \n", sizeof(&toSend));
 		//Korrekt bis hier
 		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
-
 	}	
 }
 
