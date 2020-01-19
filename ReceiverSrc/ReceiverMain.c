@@ -109,7 +109,7 @@ int main(void)
         receiveData (&sock, puffer, ((BUF/SIZESHORT) * sizeof(unsigned short)));
         convertNetShortToHostShort(puffer, res);
         
-        for(int i = 0; i < (BUF/SIZESHORT){
+        for(int i = 0; i < (BUF/SIZESHORT); i++){
             fprintf(gnuPipe, "%u \n", res[i]);
         }
         fprintf(gnuPipe, "e\n");
