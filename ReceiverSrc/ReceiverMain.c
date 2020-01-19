@@ -11,6 +11,8 @@
 #define BUF 11584
 #define SIZESHORT 16
 
+#define GPIPEP "gnuplot -persist"
+
 /**
  * Std-method which gets a call when an error occured and exits the program.
 */
@@ -56,7 +58,7 @@ receiveData( int *sock, unsigned short data[], int size)
 }
 
 /**
- * Helper function to convert the net-byte-order to the host-byte-order
+ * Helper function to convert the net-byte-order to the host-byte-order.
 */
 void 
 convertNetShortToHostShort(unsigned short givenArray[], unsigned short convertedArray[])
@@ -67,25 +69,42 @@ convertNetShortToHostShort(unsigned short givenArray[], unsigned short converted
 	}	 
 }
 
-
 /**
  * Main from Receiver, receives pakets and plots data with tool gnuplot.
 */
 int main(void)
 {
 
-    FILE * gnuPipe = popen
+/**
+ * Initialization of gnuplot.
+ * Pipe commands for style to gnuplot after init.
+*/
+    FILE * gPipe = popen (GPIPEP, "w");
+    if (gPipe < 0)
+    {
+        error_func("Failed to initialize the GNUPIPE.");
+    }
 
-    unsigned short puffer[BUF/SIZESHORT];
-    unsigned short res[BUF/SIZESHORT];
+    fprintf(gp, "set title 'Audiostream from PI'");
+    fprintf(gp, "set xdata time");
+    fprintf(gp, "set style data lines\n");
+    fprintf(gp, "set yrange [512:512]\n");
+    fprintf(gp, "set ytics 0.5\n");
+    fprinptf(gp, "set autoscale")
+    fprintf(gp, "set grid\n");
+    fprintf(gp, "set key off\n");
 
-    //Create Receiver network socket
-    int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
+/**
+ * Initialisation of the network "communication" for receiver.
+*/
+    int sock = socket( AF_INET, SOCK_DGRAM, 0 );
     if ( sock < 0 ){
         error_func("Couldn't initialize network socket.");
     }
-    //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
+
+    unsigned short puffer[BUF/SIZESHORT];
+    unsigned short res[BUF/SIZESHORT];
 
     while (1)
     {   
