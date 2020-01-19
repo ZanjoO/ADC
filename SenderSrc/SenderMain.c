@@ -131,7 +131,7 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 	int count = 0;
-	
+
 	while(count<1){
 		memset(res, 0, ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		memset(toSend, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
@@ -144,11 +144,6 @@ int main (void){
 			res[i] += doDecimal(data);
 		}
 		convertHostShortToNetShort(res, toSend);
-
-		for (int i = 0; i < (BUF/SIZESHORT); i++){
-			printf("%u \n", res[i]);
-			printf("%u \n", toSend[i]);
-		}
 		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
 	}	
 }
