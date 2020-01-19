@@ -90,7 +90,7 @@ int main(void)
     fprintf(gPipe, "set style data lines\n");
     fprintf(gPipe, "set yrange [512:512]\n");
     fprintf(gPipe, "set ytics 0.5\n");
-    fprinptf(gPipe, "set autoscale")
+    fprinptf(gPipe, "set autoscale");
     fprintf(gPipe, "set grid\n");
     fprintf(gPipe, "set key off\n");
 
