@@ -90,6 +90,7 @@ int main(void){
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
+        printf("%d\n ", sizeof(puffer));
         if( sizeof(puffer) != ((BUF/SIZESHORT) * sizeof(unsigned short)) )
             error_func("Something wrong with Payload.");
 
