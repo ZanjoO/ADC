@@ -60,7 +60,7 @@ void reconstructValues(unsigned short *puffer, unsigned short *res){
 void convertNetShortToHostShort(unsigned short givenArray[], unsigned short convertedArray[]){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
-		convertedArray[i] = ntohs(givenArray[i]);
+		convertedArray[i] += ntohs(givenArray[i]);
 	}	 
 }
 
