@@ -91,7 +91,7 @@ int main(void){
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
         printf("%u\n ", puffer);
-        if( sizeof(puffer) != ((BUF/SIZESHORT) * sizeof(unsigned short)) )
+        if( (sizeof(puffer) / sizeof(short)) != (BUF/SIZESHORT) )
             error_func("Something wrong with Payload.");
 
         convertNetShortToHostShort(puffer, res);
