@@ -88,7 +88,7 @@ int main(void)
     fprintf(gnuPipe, "set title '%s'\n", name);
     fprintf(gnuPipe, "set xlabel \"Time\"\n");
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
-    fprintf(gnuPipe, "set yrange[512:512]\n");
+    fprintf(gnuPipe, "set yrange[0:1024]\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
