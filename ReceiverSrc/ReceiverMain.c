@@ -37,7 +37,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 /**
  * Function to receive the data send by the sender.
 */
-void receiveData( int *sock, unsigned short *data, int size){
+void receiveData( int *sock, unsigned short data[], int size){
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
@@ -73,8 +73,8 @@ int contains(unsigned short *res){
 }
 
 int main(void){
-    unsigned short *puffer = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
-    unsigned short *res = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
+    unsigned short puffer[BUF/SIZESHORT];
+    unsigned short res[BUF/SIZESHORT];
 
     //Create Client network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
