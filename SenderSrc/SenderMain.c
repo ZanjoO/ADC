@@ -141,14 +141,10 @@ int main (void){
 			res[i] = htons(doDecimal(data));
 		}
 		convertHostShortToNetShort(res, toSend);
-
-		for(int k = 0; k < (BUF/SIZESHORT); k++){
-			printf("%u\n", res[k]);
-			printf("%u \n", toSend[k]);
-			//Korrekt bis hier. Beide machinen haben das little endian format Übertragung sollte also exakt im selben format stattfinden
-		}
-		send_Data(&sock, res, sizeof(res)/2, addr, PORT);
-
+		printf("res %d \n", sizeof(res));
+		printf("toSend %d \n", sizeof(toSend));
+		//Korrekt bis hier
+		send_Data(&sock, toSend, sizeof(( BUF/SIZESHORT ) * short), addr, PORT);
 
 	}	
 }
