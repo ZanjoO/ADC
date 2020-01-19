@@ -115,7 +115,7 @@ int main(void)
         for(int i = 0; i < (BUF/SIZESHORT); i++){
             fprintf(gnuPipe, "%u \n", res[i]);
         }
-        //fprintf(gnuPipe, "e\n");
+        fprintf(gnuPipe, "e\n");
         fprintf(gnuPipe, "refresh\n");
     }
 }
