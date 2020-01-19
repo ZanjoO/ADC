@@ -69,8 +69,8 @@ void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *conve
 }
 
 int main(void){
-    unsigned short puffer[BUF/SIZESHORT];
-    unsigned short res[BUF/SIZESHORT];
+    unsigned short *puffer = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
+    unsigned short *res = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
 
     //Create Client network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
