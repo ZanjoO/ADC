@@ -66,7 +66,7 @@ void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *conv
 
 int contains(unsigned short *res){
     for(int i = 0; i < (BUF/SIZESHORT); i++){
-        if(res[i] > 1024);
+        if(res[i] > 1024)
             return -1;
     }
     return 0;
@@ -90,7 +90,7 @@ int main(void){
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        if( sizeof(puffer) != ((BUF/SIZESHORT) * sizeof(unsigned short)) );
+        if( sizeof(puffer) != ((BUF/SIZESHORT) * sizeof(unsigned short)) )
             error_func("Something wrong with Payload.");
 
         convertNetShortToHostShort(puffer, res);
