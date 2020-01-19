@@ -130,8 +130,8 @@ int main (void){
 	unsigned short *res = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short)); 
 	unsigned short *toSend = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
 	while(1){
-		memset(res, 0, (BUF/SIZESHORT) * sizeof(unsigned short));
-		memset(toSend, 0 , (BUF/SIZESHORT) * sizeof(unsigned short));
+		memset(res, 0, ((BUF/SIZESHORT) * sizeof(unsigned short)));
+		memset(toSend, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;

@@ -80,15 +80,12 @@ int main(void){
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
-    {
+    {   
+        memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
+        memset(res, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
+
         receiveData (&sock, puffer, (BUF/SIZESHORT));
+        convertNetShortToHostShort(puffer, res);
 
-        for (int k = 0; k < (BUF/SIZESHORT); k++)
-        {
-            if(puffer[k] < 1024)
-                printf("%u \n", (unsigned short)puffer[k]);
-        }
-
-     
     }
 }
