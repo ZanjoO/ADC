@@ -78,7 +78,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		struct hostent *h;
 		int rc;
 		
-		h = gethostbyname(addr); //Deprecated better use getaddrinfo(); Will get fix in future
+		h = gethostbyname(addr); //Deprecated better use getaddrinfo(); Will get fixed in future
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
@@ -86,7 +86,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		memcpy ( (char*)&target.sin_addr.s_addr, h->h_addr_list[0], h->h_length );
 		target.sin_port = htons( PORT );
 
-		rc = sendto(*sock, &data, size, 0, (struct sockaddr *)&target, sizeof (target) );
+		rc = sendto(*sock, data, size, 0, (struct sockaddr *)&target, sizeof (target) );
 		if( rc < 0 ){
 			error_func("Couldn't send data: ");
 		}
@@ -130,6 +130,9 @@ int main (void){
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
+		memset(res, 0, sizeof(res));
+		memset(toSend, 0 , sizeof(toSend));
+		
 		for(int i = 0; i < (BUF/SIZESHORT); i++){
 			data[0] = 0x01;
 			data[1] = 0x80;
@@ -144,8 +147,8 @@ int main (void){
 			printf("%u \n", toSend[k]);
 			//Korrekt bis hier. Beide machinen haben das little endian format Übertragung sollte also exakt im selben format stattfinden
 		}
-		send_Data(&sock, res, sizeof(res), addr, PORT);
-		
+		send_Data(&sock, res, sizeof(res)/2, addr, PORT);
+
 
 	}	
 }

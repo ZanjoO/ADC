@@ -41,7 +41,6 @@ void receiveData( int *sock, unsigned short *data, int size){
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
-    memset(data, 0, size);
 
     len = sizeof( fromWhere );
     n = recvfrom( *sock, data, size, 0, ( struct sockaddr*) &fromWhere, &len);
@@ -86,7 +85,7 @@ int main(void){
 
         for (int k = 0; k < (BUF/SIZESHORT); k++)
         {
-            if(puffer[k] < 1024 || puffer[k] > 0)
+            if(puffer[k] < 1024)
                 printf("%u \n", (unsigned short)puffer[k]);
         }
 
