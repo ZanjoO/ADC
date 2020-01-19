@@ -85,14 +85,15 @@ int main(void)
         error_func("Failed to initialize the GNUPIPE.");
     }
 
-    fprintf(gPipe, "set title 'Audiostream from PI'");
-    fprintf(gPipe, "set xdata time");
+    fprintf(gPipe, "set title 'Audiostream from PI'\n");
+    fprintf(gPipe, "set xdata time\n");
     fprintf(gPipe, "set style data lines\n");
     fprintf(gPipe, "set yrange [512:512]\n");
     fprintf(gPipe, "set ytics 0.5\n");
     fprintf(gPipe, "set autoscale");
     fprintf(gPipe, "set grid\n");
     fprintf(gPipe, "set key off\n");
+    fprintf(gPipe, "plot\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
