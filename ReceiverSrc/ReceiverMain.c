@@ -89,7 +89,6 @@ int main(void)
     fprintf(gnuPipe, "set xlabel \"Time\"\n");
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
     fprintf(gnuPipe, "set yrange[0:1024]\n");
-    fprintf(gnuPipe, "set xrange[0:2000]\n");
     fprintf(gnuPipe, "set linespoints\n");
 
 /**
