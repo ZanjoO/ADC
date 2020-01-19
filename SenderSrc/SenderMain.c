@@ -118,6 +118,7 @@ int main (void){
 	
 /**
  * This is the programs main loop area to gather data and send'em via network.
+ * Acutally with UDP-pakets < 1500B this can reach up to ~40k samples p. second and 724 samples each round.
 */
 
 /**
@@ -141,14 +142,6 @@ int main (void){
 			res[i] = doDecimal(data);
 		}
 		convertHostShortToNetShort(res, toSend);
-		printf("res %d \n", sizeof(res));
-		printf("toSend %d \n", sizeof(toSend));
-
-		for (int k = 0; k < (BUF/SIZESHORT); k++)
-		{
-			printf("%u\n", res[k]);
-			printf("%u\n", toSend[k]);
-		}
 		//Korrekt bis hier
 		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
 	}	

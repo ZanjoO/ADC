@@ -52,19 +52,15 @@ void receiveData( int *sock, unsigned short *data, int size){
 /**
  * Helper function to convert the net-byte-order to the host-byte-order
 */
-void reconstructValues(unsigned short *puffer, unsigned short *res);
+void reconstructValues(unsigned short *puffer, unsigned short *res){
+
+
+};
 
 void convertNetShortToHostShort(unsigned short *givenArray, unsigned short *convertedArray){
 
 	for (int i = 0; i < sizeof(givenArray); i++){
 		convertedArray[i] = ntohs(givenArray[i]);
-	}	 
-}
-
-void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
-
-	for (int i = 0; i < (BUF/SIZESHORT); i++){
-		convertedArray[i] = htons(givenArray[i]);
 	}	 
 }
 
@@ -79,10 +75,11 @@ int main(void){
     }
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
+    
     while (1)
     {   
-        memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
         memset(res, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
+        memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
         convertNetShortToHostShort(puffer, res);
