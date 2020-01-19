@@ -144,7 +144,7 @@ int main (void){
 		printf("res %d \n", sizeof(res));
 		printf("toSend %d \n", sizeof(toSend));
 		//Korrekt bis hier
-		send_Data(&sock, toSend, sizeof(( BUF/SIZESHORT ) * short), addr, PORT);
+		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
 
 	}	
 }
