@@ -88,7 +88,7 @@ int main(void){
         convertNetShortToHostShort(puffer, res);
 
         for(int i = 0; i < (BUF/SIZESHORT); i++){
-            printf("%u \n", *res[i]);
+            printf("%u \n", res[i]);
         }
 
     }
