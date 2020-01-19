@@ -89,6 +89,7 @@ int main(void)
     fprintf(gnuPipe, "set xlabel \"Time\"\n");
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
     fprintf(gnuPipe, "set yrange[0:1024]\n");
+    fprintf(gnuPipe, "set yrange[0:1500]\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
@@ -118,3 +119,11 @@ int main(void)
         fprintf(gnuPipe, "refresh\n");
     }
 }
+
+/**
+ * Author: S.P. Nürenberg
+ * Decription: 
+ * 
+ * 
+ * 
+*/
