@@ -89,8 +89,6 @@ int main(void)
     fprintf(gnuPipe, "set xlabel \"Time\"\n");
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
     fprintf(gnuPipe, "set yrange[0:1024]\n");
-    fprintf(gnuPipe, "set linespoints\n");
-
 /**
  * Initialisation of the network "communication" for receiver.
 */
@@ -111,7 +109,7 @@ int main(void)
         receiveData (&sock, puffer, ((BUF/SIZESHORT) * sizeof(unsigned short)));
         convertNetShortToHostShort(puffer, res);
         
-        fprintf(gnuPipe, "plot '-'\n");
+        fprintf(gnuPipe, "plot '-' with lines\n");
         for(int i = 0; i < (BUF/SIZESHORT); i++){
             fprintf(gnuPipe, "%u \n", res[i]);
         }
