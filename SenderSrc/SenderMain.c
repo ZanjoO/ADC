@@ -144,10 +144,10 @@ int main (void){
 		printf("res %d \n", sizeof(res));
 		printf("toSend %d \n", sizeof(toSend));
 
-		for (int k = 0; k < (BUF/SIZESHORT)); k++)
+		for (int k = 0; k < (BUF/SIZESHORT); k++)
 		{
-			printf("%u\n", res[i]);
-			printf("%u\n", toSend[i]);
+			printf("%u\n", res[k]);
+			printf("%u\n", toSend[k]);
 		}
 		//Korrekt bis hier
 		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
