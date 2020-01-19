@@ -30,7 +30,9 @@
 /**
  * Std-method which gets a call when an error occured and exits the program.
 */
-void error_func(char *errormsg){
+void 
+error_func(char *errormsg)
+{
 	fprintf(stderr, "%s: %s, \n", errormsg, strerror(errno));
 	exit(EXIT_FAILURE);
 }
@@ -38,7 +40,9 @@ void error_func(char *errormsg){
 /**
  * Helper function which shifts bits to get 10 Bit resolution from adc out of given char array. 
 */
-unsigned short doDecimal( unsigned char data[] ){
+unsigned short 
+doDecimal( unsigned char data[] )
+{
 	unsigned short result;
 	result = ((data[1] & 0x03)<<8) | data[2];
 
@@ -48,7 +52,9 @@ unsigned short doDecimal( unsigned char data[] ){
 /**
  * Helper function which converts a array of short in host-byte-order to network-byte-order
 */
-void convertHostShortToNetShort(unsigned short givenArray[],unsigned short convertedArray[]){
+void 
+convertHostShortToNetShort(unsigned short givenArray[],unsigned short convertedArray[])
+{
 
 	for (int i = 0; i < (BUF/SIZESHORT); i++){
 		convertedArray[i] += htons(givenArray[i]);
@@ -58,7 +64,9 @@ void convertHostShortToNetShort(unsigned short givenArray[],unsigned short conve
 /**
  * Function to bind this service to an specific port.
 */
-void bind_Service(int *sock, unsigned short port){
+void 
+bind_Service(int *sock, unsigned short port)
+{
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof( server ));
 	server.sin_family = AF_INET;
@@ -73,7 +81,9 @@ void bind_Service(int *sock, unsigned short port){
 /**
  * Function to send the gathered data via udp to port.
 */
-void send_Data(int *sock, unsigned short data[], int size, char *addr, unsigned short port){
+void 
+send_Data(int *sock, unsigned short data[], int size, char *addr, unsigned short port)
+{
 		struct sockaddr_in target;
 		struct hostent *h;
 		int rc;
@@ -92,7 +102,8 @@ void send_Data(int *sock, unsigned short data[], int size, char *addr, unsigned 
 		}
 }
 
-int main (void){
+int main (void)
+{
 /**
  * Area where the network gets initialized.
 */
