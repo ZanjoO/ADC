@@ -14,7 +14,9 @@
 /**
  * Std-method which gets a call when an error occured and exits the program.
 */
-void error_func(char *errormsg){
+void 
+error_func(char *errormsg)
+{
 	fprintf(stderr, "%s: %s, \n", errormsg, strerror(errno));
 	exit(EXIT_FAILURE);
 }
@@ -22,7 +24,9 @@ void error_func(char *errormsg){
 /**
  * Function to bind this service to an specific port.
 */
-void bind_Service(int *sock, unsigned long adress, unsigned short port){
+void 
+bind_Service(int *sock, unsigned long adress, unsigned short port)
+{
 	struct sockaddr_in server;
 	memset( &server, 0, sizeof(server) );
 	server.sin_family = AF_INET;
@@ -37,7 +41,9 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 /**
  * Function to receive the data send by the sender.
 */
-void receiveData( int *sock, unsigned short data[], int size){
+void 
+receiveData( int *sock, unsigned short data[], int size)
+{
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
@@ -52,14 +58,24 @@ void receiveData( int *sock, unsigned short data[], int size){
 /**
  * Helper function to convert the net-byte-order to the host-byte-order
 */
-void convertNetShortToHostShort(unsigned short givenArray[], unsigned short convertedArray[]){
+void 
+convertNetShortToHostShort(unsigned short givenArray[], unsigned short convertedArray[])
+{
 
 	for (int i = 0; i < (BUF/SIZESHORT); i++){
 		convertedArray[i] += ntohs(givenArray[i]);
 	}	 
 }
 
-int main(void){
+
+/**
+ * Main from Receiver, receives pakets and plots data with tool gnuplot.
+*/
+int main(void)
+{
+
+    FILE * gnuPipe = popen
+
     unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
 
