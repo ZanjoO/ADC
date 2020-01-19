@@ -127,8 +127,8 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short *res = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short)); 
-	unsigned short *toSend = (unsigned short *) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
+	unsigned short res = (unsigned short) malloc ((BUF/SIZESHORT) * sizeof(unsigned short)); 
+	unsigned short toSend = (unsigned short) malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
 	while(1){
 		memset(res, 0, ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		memset(toSend, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
@@ -141,8 +141,8 @@ int main (void){
 			res[i] = doDecimal(data);
 		}
 		convertHostShortToNetShort(res, toSend);
-		printf("res %d \n", sizeof(*res));
-		printf("toSend %d \n", sizeof(*toSend));
+		printf("res %d \n", sizeof(res));
+		printf("toSend %d \n", sizeof(toSend));
 		//Korrekt bis hier
 		send_Data(&sock, toSend, (sizeof(unsigned short) * (BUF/SIZESHORT)), addr, PORT);
 	}	
