@@ -82,7 +82,7 @@ int main(void){
         memset(res, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
-        receiveData (&sock, puffer, (BUF/SIZESHORT));
+        receiveData (&sock, puffer, ((BUF/SIZESHORT) * sizeof(unsigned short)));
         convertNetShortToHostShort(puffer, res);
 
         for(int i = 0; i < (BUF/SIZESHORT); i++)
