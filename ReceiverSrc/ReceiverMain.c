@@ -52,11 +52,6 @@ void receiveData( int *sock, unsigned short data[], int size){
 /**
  * Helper function to convert the net-byte-order to the host-byte-order
 */
-void reconstructValues(unsigned short *puffer, unsigned short *res){
-
-
-};
-
 void convertNetShortToHostShort(unsigned short givenArray[], unsigned short convertedArray[]){
 
 	for (int i = 0; i < (BUF/SIZESHORT); i++){
@@ -68,7 +63,7 @@ int main(void){
     unsigned short puffer[BUF/SIZESHORT];
     unsigned short res[BUF/SIZESHORT];
 
-    //Create Client network socket
+    //Create Receiver network socket
     int sock = socket( AF_INET, SOCK_DGRAM, 0 );    
     if ( sock < 0 ){
         error_func("Couldn't initialize network socket.");
@@ -76,8 +71,7 @@ int main(void){
     //Waits for data from anywhere at PORT
     bind_Service( &sock, INADDR_ANY, PORT );
 
-    int count = 0;
-    while (count < 1)
+    while (1)
     {   
         memset(res, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
@@ -85,13 +79,5 @@ int main(void){
         receiveData (&sock, puffer, ((BUF/SIZESHORT) * sizeof(unsigned short)));
         convertNetShortToHostShort(puffer, res);
 
-        for(int i = 0; i < (BUF/SIZESHORT); i++)
-        {
-            
-			printf("%u \n", puffer[i]);
-            printf("%u \n", res[i]);
-        }
-
-        count++;
     }
 }
