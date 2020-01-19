@@ -78,7 +78,7 @@ int main(void)
  * Initialization of gnuplot.
  * Pipe commands for style to gnuplot after init. Gnuplot needs to bet installed on your system!
 */
-    const char* name = "Audiosignals";
+    const char* name = "Raspberry-Pi Audiosignalminer";
     FILE *gnuPipe = popen(GPIPEG, "w");
     if (gnuPipe < 0)
     {
@@ -90,6 +90,7 @@ int main(void)
     fprintf(gnuPipe, "set ylabel \"ADC Values\"\n");
     fprintf(gnuPipe, "set yrange[0:1024]\n");
     fprintf(gnuPipe, "set yrange[0:1500]\n");
+    fprintf(gnuPipe, "set lines connecting points\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
