@@ -48,10 +48,10 @@ unsigned short doDecimal( unsigned char data[] ){
 /**
  * Helper function which converts a array of short in host-byte-order to network-byte-order
 */
-void convertHostShortToNetShort(unsigned short *givenArray,unsigned short *convertedArray){
+void convertHostShortToNetShort(unsigned short givenArray[],unsigned short convertedArray[]){
 
 	for (int i = 0; i < (BUF/SIZESHORT); i++){
-		convertedArray[i] = htons(givenArray[i]);
+		convertedArray[i] += htons(givenArray[i]);
 	}	 
 }
 
@@ -73,7 +73,7 @@ void bind_Service(int *sock, unsigned short port){
 /**
  * Function to send the gathered data via udp to port.
 */
-void send_Data(int *sock, char *data, int size, char *addr, unsigned short port){
+void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
 		struct sockaddr_in target;
 		struct hostent *h;
 		int rc;
@@ -128,8 +128,8 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short *res = malloc ((BUF/SIZESHORT) * sizeof(unsigned short)); 
-	unsigned short *toSend = malloc ((BUF/SIZESHORT) * sizeof(unsigned short));
+	unsigned short res[BUF/SIZESHORT];
+	unsigned short toSend[BUF/SIZESHORT];
 	while(1){
 		memset(res, 0, ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		memset(toSend, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
@@ -139,7 +139,7 @@ int main (void){
 			data[1] = 0x80;
 			data[2] = 0x00;
 			wiringPiSPIDataRW( CS, data, LEN );
-			res[i] = doDecimal(data);
+			res[i] += doDecimal(data);
 		}
 		convertHostShortToNetShort(res, toSend);
 		//Korrekt bis hier

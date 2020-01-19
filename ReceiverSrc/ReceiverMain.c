@@ -37,7 +37,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 /**
  * Function to receive the data send by the sender.
 */
-void receiveData( int *sock, char *data, int size){
+void receiveData( int *sock, unsigned short *data, int size){
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
