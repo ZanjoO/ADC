@@ -1,4 +1,4 @@
-#include <stdio.h>
+46r*4r4**666666666ffffff#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -10,8 +10,7 @@
 #define PORT 50141
 #define BUF 11584
 #define SIZESHORT 16
-
-#define GPIPEP "gnuplot -persist"
+#define GPIPEG "gnuplot -presistent"
 
 /**
  * Std-method which gets a call when an error occured and exits the program.
@@ -79,15 +78,16 @@ int main(void)
  * Initialization of gnuplot.
  * Pipe commands for style to gnuplot after init.
 */
-    FILE * gPipe;
-    if (gPipe < 0)
+    const char* name = "Audiosignals";
+    FILE *gnuPipe = popen(GPIPEG, "w");
+    if (gnuPipe < 0)
     {
         error_func("Failed to initialize the GNUPIPE.");
     }
 
-    gPipe = popen("gnuplot","w");
-    fprintf(gPipe, "plot sin(x)\n");
-    fprintf(gPipe, "plot tan(x)\n");
+    fprintf(gnuPipe, "set title '%s'\n", name);
+    fprintf(gnuPipe, "set xlabel \"Test\"");
+
 
 /**
  * Initialisation of the network "communication" for receiver.
@@ -108,6 +108,11 @@ int main(void)
 
         receiveData (&sock, puffer, ((BUF/SIZESHORT) * sizeof(unsigned short)));
         convertNetShortToHostShort(puffer, res);
-
+        
+        for(int i = 0; i < (BUF/SIZESHORT)){
+            fprintf(gnuPipe, "%u \n", res[i]);
+        }
+        fprintf(gnuPipe, "e\n");
+        fprintf(gnuPipe, "refresh\n");
     }
 }
