@@ -24,7 +24,7 @@
 #define SPEED 3600000
 #define LEN 3
 #define PORT 50141
-#define BUF 11584 
+#define BUF 1024 
 #define SIZESHORT 16
 
 /**
@@ -139,11 +139,11 @@ int main (void){
 			res[i] = htons(doDecimal(data));
 		}
 		convertHostShortToNetShort(res, toSend);
-//BIS HIER KLABBET
+
 		for(int k = 0; k < (BUF/SIZESHORT); k++){
 			printf("%u\n", res[k]);
 			printf("%u \n", toSend[k]);
-			//HTONS is nicht konsistent? Zwei mal Htons gibt wieder normal wert..
+			//Korrekt bis hier. Beide machinen haben das little endian format Übertragung sollte also exakt im selben format stattfinden
 		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
 
