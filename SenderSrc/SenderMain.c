@@ -127,8 +127,8 @@ int main (void){
 	digitalWrite( CS, 0 );
 	char *addr = "zanjoo";
 	unsigned char data[3];
-	unsigned short res[BUF/SIZESHORT];
-	unsigned short toSend[BUF/SIZESHORT];
+	unsigned short *res = (unsigned short *) malloc (BUF/SIZESHORT); 
+	unsigned short *toSend = (unsigned short *) malloc (BUF/SIZESHORT);;
 	while(1){
 		memset(res, 0, sizeof(res));
 		memset(toSend, 0 , sizeof(toSend));
