@@ -37,7 +37,7 @@ void bind_Service(int *sock, unsigned long adress, unsigned short port){
 /**
  * Function to receive the data send by the sender.
 */
-void receiveData( int *sock, unsigned short *data, int size){
+void receiveData( int *sock, char *data, int size){
     struct sockaddr_in fromWhere;
     unsigned int len;
     int n;
@@ -90,9 +90,6 @@ int main(void){
         memset(puffer, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 
         receiveData (&sock, puffer, (BUF/SIZESHORT));
-        printf("%u\n ", puffer);
-        if( 1048 != (unsigned char)sizeof(puffer) )
-            error_func("Something wrong with Payload.");
 
         convertNetShortToHostShort(puffer, res);
         if(contains(res) < 0)

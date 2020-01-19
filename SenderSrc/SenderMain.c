@@ -73,7 +73,7 @@ void bind_Service(int *sock, unsigned short port){
 /**
  * Function to send the gathered data via udp to port.
 */
-void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned short port){
+void send_Data(int *sock, char *data, int size, char *addr, unsigned short port){
 		struct sockaddr_in target;
 		struct hostent *h;
 		int rc;
