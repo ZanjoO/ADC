@@ -87,7 +87,7 @@ int main(void){
         for (int k = 0; k < (BUF/SIZESHORT); k++)
         {
             if(puffer[k] < 1024 || puffer[k] > 0)
-                printf("%u", puffer[k]);
+                printf("%u \n", puffer[k]);
         }
 
      
