@@ -79,21 +79,15 @@ int main(void)
  * Initialization of gnuplot.
  * Pipe commands for style to gnuplot after init.
 */
-    FILE * gPipe = popen (GPIPEP, "w");
+    FILE * gPipe;
     if (gPipe < 0)
     {
         error_func("Failed to initialize the GNUPIPE.");
     }
 
-    fprintf(gPipe, "set title 'Audiostream from PI'\n");
-    fprintf(gPipe, "set xdata time\n");
-    fprintf(gPipe, "set style data lines\n");
-    fprintf(gPipe, "set yrange [512:512]\n");
-    fprintf(gPipe, "set ytics 0.5\n");
-    fprintf(gPipe, "set autoscale");
-    fprintf(gPipe, "set grid\n");
-    fprintf(gPipe, "set key off\n");
-    fprintf(gPipe, "plot\n");
+    gPipe = popen("gnuplot","w");
+    fprintf(gPipe, "plot sin(x)\n");
+    fprintf(gPipe, "plot tan(x)\n");
 
 /**
  * Initialisation of the network "communication" for receiver.
