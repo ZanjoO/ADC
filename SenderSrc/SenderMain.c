@@ -24,7 +24,7 @@
 #define SPEED 3600000
 #define LEN 3
 #define PORT 50141
-#define BUF 1024 
+#define BUF 11584
 #define SIZESHORT 16
 
 /**
@@ -78,7 +78,7 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 		struct hostent *h;
 		int rc;
 		
-		h = gethostbyname(addr); //Deprecated better use getaddrinfo(); 
+		h = gethostbyname(addr); //Deprecated better use getaddrinfo(); Will get fix in future
 		if(h == NULL){
 			error_func("Unkown host: ");
 		}
@@ -93,7 +93,6 @@ void send_Data(int *sock, unsigned short *data, int size, char *addr, unsigned s
 }
 
 int main (void){
-
 /**
  * Area where the network gets initialized.
 */
@@ -146,6 +145,7 @@ int main (void){
 			//Korrekt bis hier. Beide machinen haben das little endian format Übertragung sollte also exakt im selben format stattfinden
 		}
 		send_Data(&sock, res, sizeof(res), addr, PORT);
+		
 
 	}	
 }
