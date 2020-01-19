@@ -1,4 +1,4 @@
-46r*4r4**666666666ffffff#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
