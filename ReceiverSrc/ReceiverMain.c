@@ -82,9 +82,9 @@ int main(void){
     bind_Service( &sock, INADDR_ANY, PORT );
     while (1)
     {
-        receiveData (&sock, puffer, (BUF/SIZESHORT);
+        receiveData (&sock, puffer, (BUF/SIZESHORT));
 
-        for (int k = 0; k < (BUF/SIZESHORT)); k++)
+        for (int k = 0; k < (BUF/SIZESHORT); k++)
         {
             printf("%u", puffer[k]);
         }
