@@ -10,7 +10,7 @@
 #define PORT 50141
 #define BUF 11584
 #define SIZESHORT 16
-#define GPIPEG "gnuplot -presistent"
+#define GPIPEG "gnuplot -persistent"
 
 /**
  * Std-method which gets a call when an error occured and exits the program.
