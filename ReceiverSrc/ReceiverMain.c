@@ -120,7 +120,7 @@ int main(void)
 
 /**
  * Author: S.P. Nürenberg
- * Decription: 
+ * Decription:  This is the receiver section which plots the data.
  * 
  * 
  * 

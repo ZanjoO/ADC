@@ -17,7 +17,7 @@
  * LEN = Expected returned bytes of wiringPiSPIDataRW function
  * PORT = The port on which this service get bind and where the receiver have to listen to
  * BUF = A buffer for 724 samples of type unsigned short.
- * SIZESHORT = size if type short in bit
+ * SIZESHORT = size of type short in bit
 */
 #define CS 10
 #define CHAN 0
@@ -162,7 +162,7 @@ int main (void)
 /*
  *Author: S.P. Nürenberg
  *
- * Description: A Software to gather Signals from the MCP3008 ADC which got amplified by the LT1638 R-R OpAMp.
+ * Description: A Software to gather Signals from the MCP3008 ADC which got amplified by the LT1638IN8 R-R OpAmp.
  * The gathered audio signals are streamed over the network to another debian based computer via udp.
  * 
  * Thanks to: 
