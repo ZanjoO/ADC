@@ -6,7 +6,6 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <time.h>
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
@@ -141,9 +140,8 @@ int main (void)
 	unsigned char data[3];
 	unsigned short res[BUF/SIZESHORT];
 	unsigned short toSend[BUF/SIZESHORT];
-	int count = 0;
 
-	while(count<1){
+	while(1){
 		memset(res, 0, ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		memset(toSend, 0 , ((BUF/SIZESHORT) * sizeof(unsigned short)));
 		
